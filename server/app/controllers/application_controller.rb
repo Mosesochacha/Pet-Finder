@@ -68,13 +68,8 @@ class ApplicationController < Sinatra::Base
 
   # View all pets
   get "/pets" do
-    user = User.find_by(id: session[:user_id])
-    if user
       pets = Pet.all
       pets.to_json
-    else
-      { error: "Hello user please login " }.to_json
-    end
   end
 
   # View all pets for current user
