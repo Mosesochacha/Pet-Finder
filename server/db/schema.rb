@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2023_03_01_073111) do
 
   create_table "users", force: :cascade do |t|
     t.string "email"
-    t.string "password"
+    t.string "password_digest"
     t.string "reset_password_token"
     t.string "name"
     t.string "location"
