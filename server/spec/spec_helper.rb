@@ -1,5 +1,5 @@
 ENV['RACK_ENV'] ||= 'test'
-require_relative "../config/environment"
+require_relative "./config/environment"
 require "sinatra/activerecord/rake"
 
 RSpec.configure do |config|
