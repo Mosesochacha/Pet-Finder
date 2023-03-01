@@ -16,7 +16,7 @@ puts "🌱 Seeding spices..."
       breed: Faker::Creature::Dog.breed,
       species: Faker::Creature::Animal.name,
       gender: ['Male', 'Female'].sample,
-      image: Faker::LoremPixel.image(size: '300x300', category: 'animals'),
+      image: Faker::LoremFlickr.image(size: '300x300', search_terms: ['animals']),
       description: Faker::Lorem.sentence
     )
 
