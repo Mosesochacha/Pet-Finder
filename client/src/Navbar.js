@@ -2,8 +2,8 @@ import React from "react";
 
 export default function Navbar() {
   return (
-    <div className="scontainer">
-  <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <div className="Navbar">
+  <nav className="navbar navbar-expand-lg ">
     <div className="container-fluid">
       <a className="navbar-brand" href="Home">Home</a>
       <a className="navbar-brand" href="add" >add</a>

@@ -1,5 +1,6 @@
 import axios from "axios";
-import React, { useState ,useEffect } from "react";
+import DisplayPets from "./dispalypets";
+import React, { useState, useEffect } from "react";
 
 const URL = "https://pet-finder-9j4w.onrender.com/pets";
 
@@ -11,7 +12,32 @@ export default function Pets() {
       setPets(resp.data);
     });
   }, []);
-  console.log(pets);
 
-  return <div></div>;
+  return (
+    <div>
+<h1>Adoptive, Foster happines</h1>
+    <div className="pets">
+      {pets.map((newpets)=>{
+        console.log(newpets);
+        return(
+          <div key={newpets.id}>
+            <div>
+              <DisplayPets
+              name = {newpets.name}
+              age = {newpets.age}
+              species = {newpets.species}
+              breed = {newpets.breed}
+              image = {newpets.image}
+              gender = {newpets.gender}
+              description = {newpets.description}
+        
+              />
+            </div>
+          </div>
+        )
+      })}
+    </div>
+    </div>
+   
+  );
 }
