@@ -93,23 +93,26 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  activerecord
+  activerecord (~> 6.1)
   bcrypt
   database_cleaner (~> 2.0)
   faker
-  pry
-  rack-contrib
-  rack-cors
+  pry (~> 0.14.1)
+  rack-contrib (~> 2.3)
+  rack-cors (~> 1.1)
   rack-test (~> 1.1)
-  rake
-  require_all
+  rake (~> 13.0)
+  require_all (~> 3.0)
   rerun
   rspec (~> 3.10)
   rspec-json_expectations (~> 2.2)
-  sinatra
+  sinatra (~> 2.1)
   sinatra-activerecord
-  sqlite3
-  thin
+  sqlite3 (~> 1.4)
+  thin (~> 1.8)
+
+RUBY VERSION
+   ruby 3.0.2p107
 
 BUNDLED WITH
    2.4.6
