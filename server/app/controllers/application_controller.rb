@@ -110,7 +110,10 @@ class ApplicationController < Sinatra::Base
       { error: "You are not authorized to update this pet" }.to_json
     end
   end
-
+     get'/users' do
+     user = User.all
+    user.to_json
+     end
   # Delete pet
   delete "/pets/delete/:id" do
     pet = Pet.find(params[:id])
