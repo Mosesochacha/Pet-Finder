@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 
 const URL = "https://pet-finder-9j4w.onrender.com/pets";
 
-export default function Pets() {
+export default function Pets({error , message , deletePet}) {
   const [pets, setPets] = useState([]);
 
   useEffect(() => {
@@ -33,6 +33,9 @@ export default function Pets() {
               image = {newpets.image}
               gender = {newpets.gender}
               description = {newpets.description}
+              error = {error}
+              message = {message}
+              deletePet = {deletePet}
               />
             </div>
           </div>

@@ -29,7 +29,82 @@
   top: 3em;
 }
 
+.edits{
 
+  display: flex;
+  flex-direction: row;
+  
+  justify-content: space-between;
+  
+}
+.editi{
+  background-color: blue;
+  text-transform: none;
+   width: 3em;
+   height: 3rem;
+}
+.material-icons{
+  background-color: bisque;
+  width: 3;
+}
+.addpetform{
+  display: flex;
+  flex-direction: column;
+}
+.addimg{
+  display: flex;
+  flex-direction: row;
+}
+button:active{
+  transform: translateY(2px);
+  box-shadow: none;
+}
+button {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+ .delete:hover {
+  background-color: #3e8e41;
+}
+
+.edit:hover {
+  background-color: #3e8e41;
+}
+
+edits:focus {
+  outline: none;
+  box-shadow: 0 0 5px #4CAF50;
+}
+
+.edit:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+.delete:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+.material-icons:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+.material-icons:hover{
+  background-color: crimson
+  }
+.deletei{
+  width: 7em;
+  height: 3em;
+  background-color: aqua;
+}
 
 #header{
    margin-top: 1.6em;

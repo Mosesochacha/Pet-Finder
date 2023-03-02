@@ -42,8 +42,9 @@ export default function Register() {
       <div className="card mt-12 bg-warning" style={{ width: "18rem" }}>
         <div className="card-body ">
           <form onSubmit={handleSubmit}>
-            <label>USERNAME </label>
+            <label></label>
             <input
+            placeholder="ENTER FULL NAME"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -51,6 +52,7 @@ export default function Register() {
 
             <label>Email: </label>
             <input
+             placeholder="ENTER YOUR EMAIL"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -58,6 +60,7 @@ export default function Register() {
 
             <label>Location:</label>
             <input
+            placeholder="ENTER YOUR LOCATION"
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
@@ -70,8 +73,9 @@ export default function Register() {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <label>Password Confirmation: </label>
+            <label>Confirm password: </label>
             <input
+            placeholder="RE ENTER PASSWORD"
               type="password"
               value={passwordConfirmation}
               onChange={(e) => setPasswordConfirmation(e.target.value)}

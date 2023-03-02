@@ -1,24 +1,97 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function Login() {
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const res = await fetch("https://pet-finder-9j4w.onrender.com/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+    const data = await res.json();
+    if (data.message) {
+      setMessage(data.message);
+    } else {
+      setMessage("");
+      setError(data.error);
+    }
+  };
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    const res = await fetch("https://pet-finder-9j4w.onrender.com/user/reset-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+      }),
+    });
+    const data = await res.json();
+    if (data.message) {
+      setMessage(data.message);
+    } else {
+      setMessage("");
+      setError(data.error);
+    }
+  };
+
   return (
     <center className="mt-5 ">
       <div className="sign_up">
-        <div className="card mt-12 bg-warning" style={{ width: "18rem" }}>
-          <div className="card-body ">
-              <input placeholder="ENTER FULL NAME"/>
-            <label for="emali">Email</label>
-            <br />
-            <input type="email" placeholder="ENTER YOUR EMAIL"/>
-            <label for="password">password</label>
-            <br />
-             <center>
-              <button type="submit" className="mt-3">Login </button><br />
-              <p>Not member <a href="register">register</a></p>
-              
-             </center>
+        <form onSubmit={handleLogin}>
+          <div className="card mt-12 bg-warning" style={{ width: "18rem" }}>
+            <div className="card-body ">
+              <label htmlFor="email">Email</label>
+              <br />
+              <input
+                type="email"
+                placeholder="ENTER YOUR EMAIL"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                placeholder="ENTER PASSWORD"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <br />
+              <center>
+                <button type="submit" className="mt-3">
+                  Login
+                </button>
+                <br />
+                <div>
+                  {message && <p>{message}</p>}
+                  {error && <p>{error}</p>}
+                </div>
+                <br />
+                <p>
+                  Not a member? <a href="register">Register</a>
+                </p>
+                <p>
+                  Forgot your password?{" "}
+                  <a href="reset" onClick={handleResetPassword}>
+                    Reset it here
+                  </a>
+                </p>
+              </center>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </center>
   );
