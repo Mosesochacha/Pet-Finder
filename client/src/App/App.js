@@ -1,14 +1,24 @@
 import Navbar from '../Navbar';
+import SearchFunction from '../components/search/search';
 import './App.css';
 import Pets from '../components/Pets/pets';
-import DisplayPets from '../components/Pets/dispalypets';
+import { useState } from 'react';
+
 
 function App() {
-  return (
+  const [searchText , setSearchText] = useState([])
+  const [searchType , setSearchType] = useState("breed")
+  return ( 
     <div className="Conftainer">
-      <Navbar/>
+      <Navbar 
+      setSearchText ={setSearchText}
+      setSearchType = {setSearchType}
+      />
       <Pets/>
-      <DisplayPets/>
+      <SearchFunction
+      searchtext = {searchText}
+      searchType = {searchType}
+      />
    </div>
   );
 }

@@ -15,10 +15,10 @@ export default function Pets() {
 
   return (
     <div>
-<h1>Adoptive, Foster happines</h1>
+      <center><h1 id="header">Adoptive, Foster happines</h1></center>
+
     <div className="pets">
       {pets.map((newpets)=>{
-        console.log(newpets);
         return(
           <div key={newpets.id}>
             <div>
@@ -30,7 +30,6 @@ export default function Pets() {
               image = {newpets.image}
               gender = {newpets.gender}
               description = {newpets.description}
-        
               />
             </div>
           </div>

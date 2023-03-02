@@ -4,31 +4,8 @@
   color: #fff;
 }
 
-.navbar-brand:focus {
-  outline: none;
-}
 
 
-
-
-.nav-link:hover {
-  color: #fff;
-}
-
-
-
-.btn-outline-success {
-  /* background-color: #28A745;
-  color: #fff;
-  border: none;
-  border-radius: 0;
-  font-size: 16px;
-  font-weight: bold;
-  text-transform: uppercase;
-  padding: 8px 20px;
-  margin-left: 10px;
-  transition: all 0.3s ease; */
-}
 
 .btn-outline-success:hover {
   background-color: #fff;
@@ -51,6 +28,16 @@
   background-color: aqua;
   top: 3em;
 }
-h1{
-  top: 3em;
+
+
+
+#header{
+   margin-top: 1.6em;
+   height: 10%;
+   width: 100%;
+   position: fixed;
+   top: 0;
+   z-index: 9999;
+   color: coral;
+   font-family: 'Times New Roman', Times, serif;
 }
