@@ -10,7 +10,10 @@ export default function Pets() {
   useEffect(() => {
     axios.get(URL).then((resp) => {
       setPets(resp.data);
-    });
+    })
+    .catch((err)=>{
+      console.error(err)
+    })
   }, []);
 
   return (
