@@ -3,7 +3,7 @@ import SearchFunction from '../components/search/search';
 import './App.css';
 import Pets from '../components/Pets/pets';
 import { useState } from 'react';
-
+// import SearchData from '../components/search/searcheddata';
 
 function App() {
   const [searchText , setSearchText] = useState([])
@@ -19,6 +19,7 @@ function App() {
       searchtext = {searchText}
       searchType = {searchType}
       />
+      {/* <SearchData/> */}
    </div>
   );
 }
