@@ -85,13 +85,13 @@ class ApplicationController < Sinatra::Base
 
   # Search pets by name
   get "/pets/search/name/:name" do
-    pets = Pet.where("name LIKE ?", "%#{params[:name]}%")
+    pets = Pet.where("name LIKE ?", "#{params[:name]}%")
     pets.to_json
   end
 
   # Search pets by breed
   get "/pets/search/breed/:breed" do
-    pets = Pet.where("breed LIKE ?", "%#{params[:breed]}%")
+    pets = Pet.where("breed LIKE ?", "#{params[:breed]}%")
     pets.to_json
   end
 
