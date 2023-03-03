@@ -24,7 +24,7 @@ class ApplicationController < Sinatra::Base
     rescue ActiveRecord::RecordInvalid => e
       { error: e.record.errors.full_messages.join(", ") }.to_json
     rescue => e
-      { error: "Regestration failed" }.to_json
+      { error: "Registration failed" }.to_json
     end
   end
 
@@ -68,8 +68,8 @@ class ApplicationController < Sinatra::Base
 
   # View all pets
   get "/pets" do
-      pets = Pet.all
-      pets.to_json
+    pets = Pet.all
+    pets.to_json
   end
 
   # View all pets for current user
@@ -77,12 +77,10 @@ class ApplicationController < Sinatra::Base
     user = User.find_by(id: session[:user_id])
     if user
       pets = user.pets
-      pets.to_json
-      { message: "Here are your pets" }.to_json
+      { message: "Here are your pets", pets: pets }.to_json
     else
       { error: "You must be logged in to view your pets" }.to_json
     end
-
   end
 
   # Search pets by name
@@ -97,36 +95,40 @@ class ApplicationController < Sinatra::Base
     pets.to_json
   end
 
-  # Update pet details
-  put "/pets/update/:id" do
-    pet = Pet.find(params[:id])
-    if pet.user_id == session[:user_id]
-      pet.update(
-        name: params[:name],
-        breed: params[:breed],
-        age: params[:age],
-        description: params[:description],
-      )
-      pet.to_json
-    else
-      { error: "You are not authorized to update this pet" }.to_json
-    end
+ # Update pet details
+put "/pets/update/:id" do
+  pet = Pet.find(params[:id])
+  if pet.user_id == session[:user_id]
+    pet.update(
+      name: params[:name],
+      breed: params[:breed],
+      age: params[:age],
+      description: params[:description]
+    )
+    pet.to_json
+  else
+    { error: "You are not authorized to update this pet" }.to_json
   end
-     get'/users' do
-     user = User.all
-    user.to_json
-     end
-  # Delete pet
-  delete "/pets/delete/:id" do
+end
+
+# Retrieve all users
+get '/users' do
+  users = User.all
+  users.to_json
+end
+
+# Delete pet
+delete "/pets/delete/:id" do
+  begin
     pet = Pet.find(params[:id])
-    if pet.user_id == session[:user_id]
+    if pet.user_pet_ids == session[:user_id]
       pet.destroy
       { message: "Pet deleted successfully" }.to_json
     else
       { error: "You are not authorized to delete this pet" }.to_json
     end
-    else{
-      error: error.message
-    }
+  rescue StandardError => e
+    { error: e.message }.to_json
   end
+end
 end
