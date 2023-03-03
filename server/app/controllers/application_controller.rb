@@ -77,11 +77,18 @@ class ApplicationController < Sinatra::Base
     user = User.find_by(id: session[:user_id])
     if user
       pets = user.pets
-      { message: "Here are your pets", pets: pets }.to_json
+      if pets.empty?
+        { alert: "You haven't added any pets yet" }.to_json
+      else
+        { message: "Here are your pets", pets: pets }.to_json
+      end
     else
       { error: "You must be logged in to view your pets" }.to_json
     end
+  rescue => e
+    { error: e.message }.to_json
   end
+  
 
   # Search pets by name
   get "/pets/search/name/:name" do
@@ -98,7 +105,7 @@ class ApplicationController < Sinatra::Base
  # Update pet details
 put "/pets/update/:id" do
   pet = Pet.find(params[:id])
-  if pet.user_id == session[:user_id]
+  if pet.user_pet_ids== session[:user_id]
     pet.update(
       name: params[:name],
       breed: params[:breed],
