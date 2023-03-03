@@ -25,28 +25,33 @@ export default function Navbar({ setSearchText, setSearchType }) {
   };
 
   return (
-    <div classNameName="Navbar">
-      <nav classNameName="navbar navbar-expand-lg">
-        <div classNameName="container-fluid">
-          <NavLink to="/"> Home</NavLink>
+
+    
+    <div className="Navbar">
+      <nav className="navbar navbar-expand-lg">
+        <div className="container-fluid">
+          <NavLink to="/home"> Home</NavLink>
           <NavLink to="/add">ADD YOUR PET</NavLink>
           <NavLink to="/view">VIEW YOUR PETS</NavLink>
           <NavLink to="/landingpage" onClick={handleLogout} >  LOGOUT</NavLink>
+          <NavLink to="/login">LOGIN</NavLink>
+          <NavLink to="/register">REGISTER</NavLink>
           {/* <button onClick={handleLogout}>LOGOUT</button> */}
           <div>{message && <p>{message}</p>}</div>
           <div>{error && <p>{error}</p>}</div>
-          <form classNameName="d-flex" role="search">
+          <form className="d-flex me-3" role="search">
             <select
-              classNameName="options"
+              className="options me-2"
               onClick={(e) => {
                 setSearchType(e.target.value);
               }}
+              
             >
               <option>breed</option>
               <option>name</option>
             </select>
             <input
-              classNameName="form-control me-2"
+              className="form-control m-2"
               type="search"
               placeholder="Search"
               aria-label="Search"
@@ -55,8 +60,8 @@ export default function Navbar({ setSearchText, setSearchType }) {
               }}
               value={search}
             />
-            <button
-              classNameName="button"
+            <NavLink to="/search"
+              className="button"
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
@@ -64,7 +69,7 @@ export default function Navbar({ setSearchText, setSearchType }) {
               }}
             >
               Search
-            </button>
+            </NavLink>
           </form>
         </div>
       </nav>

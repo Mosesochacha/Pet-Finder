@@ -21,8 +21,9 @@ export default function Logout() {
   };
   return (
     <div>
-      <NavLink to="./"></NavLink>
+      <NavLink to="./">
       <button onClick={handleLogout}>LOGOUT</button>
+      </NavLink>
       <div>{message && <p>{message}</p>}</div>
       <div>{error && <p>{error}</p>}</div>
     </div>

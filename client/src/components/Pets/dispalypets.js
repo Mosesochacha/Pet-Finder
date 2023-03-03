@@ -44,11 +44,8 @@ export default function DisplayPets({
             <i onClick={handleDelete} className="material-icons">
               delete
             </i>
-            <NavLink to="/edit"></NavLink>
-            <i className="material-icons">edit</i>
-          </div>
-          <div className="edits mt-2">
-            <h6 className="edit">Save</h6>
+            <NavLink to="/edit"> <i className="material-icons">edit</i></NavLink>
+           
           </div>
         </div>
       </div>

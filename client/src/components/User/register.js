@@ -94,8 +94,8 @@ export default function Register() {
 
             <button type="submit">Register</button>
             <p>
-                  Are you a member? <NavLink to="/login"><a href="login"
-                  >Login</a></NavLink>
+                  Are you a member? <NavLink to="/login">Login</NavLink>
+
                 </p>
             {message && <p>{message}</p>}
             {error && <p>{error}</p>}

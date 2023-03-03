@@ -12,16 +12,6 @@ button:hover, a:hover, NavLink:hover {
   border-color: #007bff; 
 }
 
-
-.btn-outline-success:hover {
-  background-color: #fff;
-  color: blueviolet;
-  border: 2px solid red
-}
-
-.btn-outline-success:focus {
-  outline: none;
-}
 .Navbar{
   background-color: red;
   height: 10%;
@@ -30,16 +20,11 @@ button:hover, a:hover, NavLink:hover {
   top: 0;
   z-index: 9999; 
 }
-.petConatiner{
-  background-color: aqua;
-  top: 3em;
-}
 
 .edits{
 
   display: flex;
   flex-direction: row;
-  
   justify-content: space-between;
   
 }
@@ -75,7 +60,8 @@ button {
   background-color: #4CAF50;
   border: none;
   border-radius: 5px;
-  padding: 10px 20px;
+  padding: 10px 10px;
+  height: fit-content;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }

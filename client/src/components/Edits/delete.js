@@ -5,7 +5,7 @@ export default function Petdelete() {
   const [message , setMessege] = useState("");
   const [error, setError] = useState("");
 
-  async function deletePet(id) {
+  async function DeletePet(id) {
     console.log("hello");
     const response = await fetch(`https://pet-finder-9j4w.onrender.com/pets/delete/${id}`, {
       method: "DELETE",
@@ -30,7 +30,7 @@ export default function Petdelete() {
             {error && <p>{error}</p>}
            </div>
           <div className="edits">
-            <i onClick = {deletePet} className="material-icons">delete</i>
+            <i onClick = {DeletePet} className="material-icons">delete</i>
             <i className="material-icons">edit</i>
           </div>
   </div>;

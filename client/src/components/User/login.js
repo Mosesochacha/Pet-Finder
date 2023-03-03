@@ -90,8 +90,8 @@ export default function Login() {
                 </div>
                 <br />
                 <p>
-                  Not a member? <NavLink to="/register"><a href="register"
-                  >Register</a></NavLink>
+                  Not a member? <NavLink to="/register" className="link" style={{color: 'red'}}>Register</NavLink>
+
                 </p>
                 <p>
                   Forgot your password?{" "}
