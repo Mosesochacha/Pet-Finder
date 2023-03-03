@@ -82,6 +82,7 @@ class ApplicationController < Sinatra::Base
     else
       { error: "You must be logged in to view your pets" }.to_json
     end
+
   end
 
   # Search pets by name
@@ -124,5 +125,8 @@ class ApplicationController < Sinatra::Base
     else
       { error: "You are not authorized to delete this pet" }.to_json
     end
+    else{
+      error: error.message
+    }
   end
 end
