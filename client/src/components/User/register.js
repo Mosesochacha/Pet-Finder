@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NavLink, useHistory } from "react-router-dom";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -8,6 +9,12 @@ export default function Register() {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [isRegistered, setIsRegistered] = useState(false)
+   const history = useHistory()
+    
+   if (isRegistered) {
+    history.push("/login")
+   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,10 +37,14 @@ export default function Register() {
     const data = await response.json();
     if (data.message) {
       setMessage(data.message);
+      setIsRegistered(true)
       setError("");
+      history.push("/login")
     } else {
       setMessage("");
       setError(data.error);
+      setIsRegistered(false);
+      history.push("/register")
     }
   };
 
@@ -82,6 +93,10 @@ export default function Register() {
             />
 
             <button type="submit">Register</button>
+            <p>
+                  Are you a member? <NavLink to="/login"><a href="login"
+                  >Login</a></NavLink>
+                </p>
             {message && <p>{message}</p>}
             {error && <p>{error}</p>}
           </form>

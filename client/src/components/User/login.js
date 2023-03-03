@@ -1,10 +1,17 @@
 import React, { useState } from "react";
+import { NavLink, useHistory } from "react-router-dom";
 
 export default function Login() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const history = useHistory()
+
+   if (isLoggedIn) {
+    history.push("/home")
+   }
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,6 +28,8 @@ export default function Login() {
     const data = await res.json();
     if (data.message) {
       setMessage(data.message);
+      setIsLoggedIn(true)
+      history.push("/home")
     } else {
       setMessage("");
       setError(data.error);
@@ -49,6 +58,7 @@ export default function Login() {
 
   return (
     <center className="mt-5 ">
+
       <div className="sign_up">
         <form onSubmit={handleLogin}>
           <div className="card mt-12 bg-warning" style={{ width: "18rem" }}>
@@ -80,7 +90,8 @@ export default function Login() {
                 </div>
                 <br />
                 <p>
-                  Not a member? <a href="register">Register</a>
+                  Not a member? <NavLink to="/register"><a href="register"
+                  >Register</a></NavLink>
                 </p>
                 <p>
                   Forgot your password?{" "}

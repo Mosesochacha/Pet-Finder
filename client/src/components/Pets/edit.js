@@ -46,6 +46,7 @@ export default function EditPet({id}) {
           description,
           image,
           gender,
+          
         }),
       }
     );

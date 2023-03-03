@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 export default function Logout() {
   const [message, setMessage] = useState("");
@@ -20,6 +21,7 @@ export default function Logout() {
   };
   return (
     <div>
+      <NavLink to="./"></NavLink>
       <button onClick={handleLogout}>LOGOUT</button>
       <div>{message && <p>{message}</p>}</div>
       <div>{error && <p>{error}</p>}</div>

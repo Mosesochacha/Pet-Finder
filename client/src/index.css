@@ -5,6 +5,12 @@
 }
 
 
+button:hover, a:hover, NavLink:hover {
+  cursor: pointer; 
+  color: #fff; 
+  background-color: #007bff; 
+  border-color: #007bff; 
+}
 
 
 .btn-outline-success:hover {

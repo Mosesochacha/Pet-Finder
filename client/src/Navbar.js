@@ -25,18 +25,19 @@ export default function Navbar({ setSearchText, setSearchType }) {
   };
 
   return (
-    <div className="Navbar">
-      <nav className="navbar navbar-expand-lg">
-        <div className="container-fluid">
+    <div classNameName="Navbar">
+      <nav classNameName="navbar navbar-expand-lg">
+        <div classNameName="container-fluid">
           <NavLink to="/"> Home</NavLink>
           <NavLink to="/add">ADD YOUR PET</NavLink>
+          <NavLink to="/view">VIEW YOUR PETS</NavLink>
           <NavLink to="/landingpage" onClick={handleLogout} >  LOGOUT</NavLink>
-          <button onClick={handleLogout}>LOGOUT</button>
+          {/* <button onClick={handleLogout}>LOGOUT</button> */}
           <div>{message && <p>{message}</p>}</div>
           <div>{error && <p>{error}</p>}</div>
-          <form className="d-flex" role="search">
+          <form classNameName="d-flex" role="search">
             <select
-              className="options"
+              classNameName="options"
               onClick={(e) => {
                 setSearchType(e.target.value);
               }}
@@ -45,7 +46,7 @@ export default function Navbar({ setSearchText, setSearchType }) {
               <option>name</option>
             </select>
             <input
-              className="form-control me-2"
+              classNameName="form-control me-2"
               type="search"
               placeholder="Search"
               aria-label="Search"
@@ -55,7 +56,7 @@ export default function Navbar({ setSearchText, setSearchType }) {
               value={search}
             />
             <button
-              className="button"
+              classNameName="button"
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
