@@ -42,7 +42,7 @@ class ApplicationController < Sinatra::Base
   # Logout
   post "/user/logout" do
     session[:user_id] = nil
-    { message: "Logout successfully" }.to_json
+    { message: "Logged out successfully!" }.to_json
   end
 
   # Add pet
@@ -78,6 +78,7 @@ class ApplicationController < Sinatra::Base
     if user
       pets = user.pets
       pets.to_json
+      { message: "Here are your pets" }.to_json
     else
       { error: "You must be logged in to view your pets" }.to_json
     end
