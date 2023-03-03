@@ -33,9 +33,8 @@ export default function Pets({error , message , deletePet}) {
               image = {newpets.image}
               gender = {newpets.gender}
               description = {newpets.description}
-              error = {error}
-              message = {message}
-              deletePet = {deletePet}
+              id = {newpets.id}
+              
               />
             </div>
           </div>

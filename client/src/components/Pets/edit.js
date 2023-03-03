@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function AddPet() {
+export default function EditPet({id}) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [breed, setBreed] = useState("");
@@ -10,7 +10,7 @@ export default function AddPet() {
   const [gender, setGender] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-
+   
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -32,9 +32,9 @@ export default function AddPet() {
       return;
     }
     const response = await fetch(
-      "https://pet-finder-9j4w.onrender.com/add/pet",
+      `https://pet-finder-9j4w.onrender.com/pets/update/${id}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -119,10 +119,11 @@ export default function AddPet() {
                 accept="image/*"
                 onChange={handleImageChange}
               />
-               </div>
+              {/* <i className="material-icons" onClick={handleImageChange}>upload</i> */}
+            </div>
             <button className="mt-2" type="submit">
               {" "}
-              ADD YOUR PET
+              SAVE
             </button>
             {message && <p>{message}</p>}
             {error && <p>{error}</p>}

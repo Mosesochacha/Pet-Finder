@@ -43,6 +43,9 @@
    width: 3em;
    height: 3rem;
 }
+i{
+  background-color: coral;
+}
 .material-icons{
   background-color: bisque;
   width: 3;

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Pets from "../Pets/pets";
+// import Pets from "../Pets/pets";
 
 export default function Petdelete() {
-  const [messege, setMessege] = useState("");
+  const [message , setMessege] = useState("");
   const [error, setError] = useState("");
 
   async function deletePet(id) {
@@ -12,7 +12,7 @@ export default function Petdelete() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id }),
+      // body: JSON.stringify({ id }),
     });
 
     const data = await response.json();
@@ -25,10 +25,13 @@ export default function Petdelete() {
   }
 
   return <div>
-      <Pets
-       message = {messege}
-       error = {error}
-       deletePet = {deletePet}
-      />
+        <div>
+            {message && <p>{message}</p>}
+            {error && <p>{error}</p>}
+           </div>
+          <div className="edits">
+            <i onClick = {deletePet} className="material-icons">delete</i>
+            <i className="material-icons">edit</i>
+          </div>
   </div>;
 }
