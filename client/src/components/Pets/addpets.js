@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
-export default function AddPet() {
+export default function AddPet({ userId }) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [breed, setBreed] = useState("");
@@ -10,6 +11,8 @@ export default function AddPet() {
   const [gender, setGender] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+
+  const { id } = useParams();
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -25,14 +28,12 @@ export default function AddPet() {
 
     if (age < 0) {
       setError("Age cannot be negative.");
+      setMessage("");
       return;
     }
-    if (age < 0) {
-      setError("Age cannot be negative.");
-      return;
-    }
+
     const response = await fetch(
-      "https://pet-finder-pgl9.onrender.com/add/pet",
+      `https://pet-finder-pgl9.onrender.com/user/${id}/add/pet`,
       {
         method: "POST",
         headers: {
@@ -46,6 +47,7 @@ export default function AddPet() {
           description,
           image,
           gender,
+          user_id: userId,
         }),
       }
     );
@@ -119,7 +121,7 @@ export default function AddPet() {
                 accept="image/*"
                 onChange={handleImageChange}
               />
-               </div>
+            </div>
             <button className="mt-2" type="submit">
               {" "}
               ADD YOUR PET

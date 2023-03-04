@@ -50,7 +50,7 @@ class ApplicationController < Sinatra::Base
   end
 
   # Add pet
-  post "/add/pet" do
+  post ":user.id/add/pet" do
     pet = Pet.new(
       name: params[:name],
       breed: params[:breed],
