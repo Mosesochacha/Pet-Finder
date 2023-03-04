@@ -9,7 +9,6 @@
 
 body{
   background-image: url(/src/App/pexels-amine-mayoufi-3069334.jpg);
-  background-color: brown;
   background-size: 30%;
   height: 80%;
   width: 100%;
@@ -22,6 +21,15 @@ body{
   z-index: 6000;
  }
   
+ .navbar{
+  background-color: alicebluez;
+  position: fixed;
+  z-index: 999999;
+  width: 100%;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: medium;
+  margin-top: 0%;
+ }
   
   .par{
     color: black;

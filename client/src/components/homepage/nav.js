@@ -5,7 +5,7 @@ export default function HomepageNavbar() {
   const history = useHistory()
   return (
     <div>
-      <nav className="navbar bg-body-tertiary">
+      <nav className="navbar bg-body-tertiary" >
         <div className="container-fluid " id="homepagenav">
           <a href="l" className="navbar-brand">
             WELCOME TO PET FINDER

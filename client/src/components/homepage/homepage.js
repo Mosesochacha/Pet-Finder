@@ -74,7 +74,7 @@ export default function Homepage() {
               height="320em"
               style={{ transition: "1s ease-in-out" }}
             />
-            className="par">{paragraphs[Math.floor(Math.random() * paragraphs.length)]}
+           <span className="par" >{paragraphs[Math.floor(Math.random() * paragraphs.length)]}</span>
           </div>
 
           <p>

@@ -7,7 +7,9 @@ export default function Navbar({ setSearchText, setSearchType }) {
   const history = useHistory();
   const [error, setError] = useState("");
   const handleLogout = async (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     const res = await fetch(
       "https://pet-finder-pgl9.onrender.com/user/logout",
       {
@@ -24,9 +26,11 @@ export default function Navbar({ setSearchText, setSearchType }) {
       setError(data.error);
     }
   };
+  
+  
 
   return (
-    <div className="Navbar">
+    <div className="navbar">
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
           <NavLink to="/home"> Home</NavLink>

@@ -31,45 +31,57 @@ class ApplicationController < Sinatra::Base
   # Login
   post "/user/login" do
     user = User.find_by(email: params[:email])
-    if user && user.authenticate(params[:password])
+    if user.nil?
+      { error: "User not found" }.to_json
+    elsif user.authenticate(params[:password])
       session[:user_id] = user.id
       { message: "Logged in successfully" }.to_json
     else
-      if user && !user.authenticate(params[:password])
-        { error: "Incorrect password" }.to_json
-      else
-        { error: "User not found" }.to_json
-      end
+      { error: "Incorrect password" }.to_json
     end
   end
+  
 
   # Logout
   post "/user/logout" do
     session[:user_id] = nil
-    redirect "/"
+    { message: "Logged out successfully" }.to_json
+  rescue => e
+    { error: e.message }.to_json
   end
+  
+
 
   # Add pet
-  post ":user.id/add/pet" do
-    pet = Pet.new(
-      name: params[:name],
-      breed: params[:breed],
-      age: params[:age],
-      image: params[:image],
-      species: params[:species],
-      description: params[:description],
-      user_id: user.id,
-    )
+  post "/users/add_pet" do
+    user = User.find_by(id: params[:user_id])
+    if user
+      pet = Pet.new(
+        name: params[:name],
+        breed: params[:breed],
+        age: params[:age],
+        image: params[:image],
+        species: params[:species],
+        description: params[:description],
+        user_id: user.id
+      )
   
-    if pet.valid?
-      pet.save
-      status 201
-      { message: "Pet added successfully" }.to_json
+      if pet.save
+        status 201
+        { message: "Pet added successfully" }.to_json
+      else
+        status 422
+        { error: "Failed to add pet" }.to_json
+      end
     else
-      status 422
-      { error: "Failed to add pet" }.to_json
+      status 404
+      { error: "User not found" }.to_json
     end
+  rescue => e
+    { error: e.message }.to_json
   end
+  
+  
   
 
   # View all pets
@@ -84,7 +96,7 @@ class ApplicationController < Sinatra::Base
     if user
       pets = user.pets
       if pets.empty?
-        { alert: "You haven't added any pets yet" }.to_json
+        { message: "You haven't added any pets yet" }.to_json
       else
         { message: "Here are your pets", pets: pets }.to_json
       end
@@ -94,40 +106,55 @@ class ApplicationController < Sinatra::Base
   rescue => e
     { error: e.message }.to_json
   end
+  
 
   # Search pets by name
   get "/pets/search/name/:name" do
-    pets = Pet.where("name LIKE ?", "#{params[:name]}%")
-    pets.to_json
+    begin
+      pets = Pet.where("name LIKE ?", "#{params[:name]}%")
+      pets.to_json
+    rescue => e
+      { error: e.message }.to_json
+    end
   end
+  
 
   # Search pets by breed
   get "/pets/search/breed/:breed" do
-    pets = Pet.where("breed LIKE ?", "#{params[:breed]}%")
-    pets.to_json
+    begin
+      pets = Pet.where("breed LIKE ?", "#{params[:breed]}%")
+      pets.to_json
+    rescue StandardError => e
+      { error: e.message }.to_json
+    end
   end
-
+  
  # Update pet details
  put "/pets/update/:id" do
-  pet = Pet.find_by(id: params[:id])
-  if pet
-    if pet.user_id == session[:user_id]
-      pet.update(
-        name: params[:name],
-        breed: params[:breed],
-        age: params[:age],
-        description: params[:description],
-        image: params[:image],
-        species: params[:species]
-      )
-      pet.to_json
+  begin
+    pet = Pet.find_by(id: params[:id])
+    if pet
+      if pet.user_id == session[:user_id]
+        pet.update(
+          name: params[:name],
+          breed: params[:breed],
+          age: params[:age],
+          description: params[:description],
+          image: params[:image],
+          species: params[:species]
+        )
+        pet.to_json
+      else
+        { error: "You are not authorized to update this pet" }.to_json
+      end
     else
-      { error: "You are not authorized to update this pet" }.to_json
+      { error: "Pet not found" }.to_json
     end
-  else
-    { error: "Pet not found" }.to_json
+  rescue StandardError => e 
+    { error: e.message }.to_json
   end
 end
+
 
 
 # Retrieve all users
@@ -137,20 +164,20 @@ get '/users' do
 end
 
 # Delete pet
-# Delete pet
 delete "/pets/delete/:id" do
   begin
     pet = Pet.find(params[:id])
-    if pet.user_pet_ids.include?(session[:user_id])
+    if pet.user_id == session[:user_id]
       pet.destroy
       { message: "Pet deleted successfully" }.to_json
     else
       { error: "You are not authorized to delete this pet" }.to_json
     end
-  rescue StandardError => e 
-    { error: e.message }.to_json
+  rescue ActiveRecord::RecordNotFound
+    { error: "Pet not found" }.to_json
   end
 end
+
 
 
 end
