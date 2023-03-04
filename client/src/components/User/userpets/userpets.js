@@ -45,7 +45,7 @@ export default function UserPet() {
         {pets.map((newpets) => {
           return (
             <div key={newpets.id}>
-              <div className="card" style={{ width: "18rem" }}>
+              <div className="card">
                 <img src={newpets.image} className="card-img-top" alt="..." />
                 <div className="card-body">
                   <h3 className="card-title"> Name: {newpets.name}</h3>

@@ -63,8 +63,8 @@ export default function EditPet({id}) {
   };
 
   return (
-    <center className="mt-5 addpet ">
-      <div className="card mt-12 bg-warning" style={{ width: "21rem" }}>
+    <center className="card ">
+      <div className="card " >
         <div className="card-body  " id="addpet">
           <form onSubmit={handleSubmit} className="addpetform">
             <label>NAME:</label>
@@ -116,8 +116,8 @@ export default function EditPet({id}) {
             />
 
             <div className="a">
-              <label>UPLOAD IMAGE: </label>
               <input
+              placeholder="upload image"
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}

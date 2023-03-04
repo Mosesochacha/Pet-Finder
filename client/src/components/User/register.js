@@ -54,7 +54,7 @@ export default function Register() {
 
   return (
     <center className="mt-5">
-      <div className="card mt-12 bg-warning" style={{ width: "18rem" }}>
+      <div className="card  ">
         <div className="card-body ">
           <form onSubmit={handleSubmit}>
             <label>USERNAME</label>

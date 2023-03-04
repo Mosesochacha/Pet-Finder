@@ -68,7 +68,7 @@ export default function Login() {
   };
 
   return (
-    <center className="mt-5 ">
+    <center className=" ">
       <div className="sign_up">
         <form onSubmit={handleLogin}>
           <div className="card mt-12" style={{ width: "18rem" }}>

@@ -63,7 +63,7 @@ export default function AddPet({ userId }) {
 
   return (
     <center className="mt-5 addpet">
-      <div className="card mt-12 bg-warning" style={{ width: "21rem" }}>
+      <div className="card " style={{ width: "21rem" }}>
         <div className="card-body" id="addpet">
           <form onSubmit={handleSubmit} className="addpetform">
             <label>NAME:</label>
