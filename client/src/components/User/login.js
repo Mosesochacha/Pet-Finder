@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
+import Loading from "../loading/loader";
 
 export default function Login() {
   const [password, setPassword] = useState("");
@@ -7,6 +8,7 @@ export default function Login() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedInin , setIsLoggedInify] = useState(false);
   const history = useHistory();
 
   if (isLoggedIn) {
@@ -16,6 +18,7 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoggedInify(true);
     const res = await fetch("https://pet-finder-pgl9.onrender.com/user/login", {
       method: "POST",
       headers: {
@@ -30,12 +33,14 @@ export default function Login() {
     if (data.message) {
       setMessage(data.message);
       setIsLoggedIn(true);
-      history.push("/home")
+      history.push("/home");
     } else {
       setMessage("");
       setError(data.error);
     }
+    setIsLoggedInify(false);
   };
+  
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
@@ -57,7 +62,9 @@ export default function Login() {
     } else {
       setMessage("");
       setError(data.error);
+      
     }
+    setIsLoggedInify(false)
   };
 
   return (
@@ -75,6 +82,7 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
               />
               <label htmlFor="password">Password</label>
+              {isLoggedInin && <Loading/>}
               <input
                 type="password"
                 placeholder="ENTER PASSWORD"
@@ -82,6 +90,7 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <br />
+             
               <center>
                 <button type="submit" className="mt-3">
                   Login

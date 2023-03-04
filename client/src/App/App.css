@@ -170,3 +170,28 @@ button {
   transition: all .5s ease-in-out;
 }
 
+.spiner {
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	 /* background-color: #333; */
+	 width: 100vh;
+	 height: 100vh;
+	 align-items: center;
+	 justify-content: center;
+}
+.spiner::after{
+	content: "";
+	width: 75px;
+	height: 75px;
+	border:  15px solid white;
+	border-top-color: #2980b9;
+	border-radius: 50%;
+	animation: Spinning 0.20s ease infinite;
+}
+
+@keyframes Spinning{
+	from{transform: rotate(0turn)}
+	to{transform: rotate(1turn)}
+}

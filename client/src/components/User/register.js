@@ -80,7 +80,7 @@ export default function Register() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-
+                  {isRegistering && <Loading/>}
             <label>Password: </label>
             <input
               type="password"
@@ -100,7 +100,7 @@ export default function Register() {
             <p>
               Are you a member? <NavLink to="/login">Login</NavLink>
             </p>
-            {isRegistering && <Loading/>}
+           
             {message && <p>{message}</p>}
             {error && <p>{error}</p>}
           </form>
