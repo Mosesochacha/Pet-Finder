@@ -19,7 +19,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch(
-      "https://pet-finder-9j4w.onrender.com/user/register",
+      "https://pet-finder-pgl9.onrender.com/user/register",
       {
         method: "POST",
         headers: {
@@ -49,7 +49,7 @@ export default function Register() {
   };
 
   return (
-    <center className="mt-5 ">
+    <center className="mt-5">
       <div className="card mt-12 bg-warning" style={{ width: "18rem" }}>
         <div className="card-body ">
           <form onSubmit={handleSubmit}>

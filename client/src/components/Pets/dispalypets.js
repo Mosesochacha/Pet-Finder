@@ -12,7 +12,7 @@ export default function DisplayPets({
 }) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const URL = `https://pet-finder-9j4w.onrender.com/pets/delete/`;
+  const URL = `https://pet-finder-pgl9.onrender.com/pets/delete/`;
   const handleDelete = async (e) => {
     e.preventDefault();
     const res = await fetch( URL + `${id}`, {

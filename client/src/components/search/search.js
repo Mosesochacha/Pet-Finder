@@ -7,7 +7,7 @@ export default function SearchFunction({searchtext , searchtype}){
    const [p , setp] = useState([]);
      
    useEffect(()=>{
-    const URL= searchtype ==="breed" ? `https://pet-finder-9j4w.onrender.com/pets/search/breed/${searchtext}` : `https://pet-finder-9j4w.onrender.com/pets/search/name/${searchtext}` ;
+    const URL= searchtype ==="breed" ? `https://pet-finder-pgl9.onrender.com/pets/search/breed/${searchtext}` : `https://pet-finder-pgl9.onrender.com/pets/search/name/${searchtext}` ;
       
     axios.get((URL))
     .then((res)=>{

@@ -6,7 +6,7 @@ export default function Logout() {
   const [error, setError] = useState("");
   const handleLogout = async (e) => {
     e.preventDefault();
-    const res = await fetch("https://pet-finder-9j4w.onrender.com/user/logout", {
+    const res = await fetch("https://pet-finder-pgl9.onrender.com/user/logout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     });

@@ -9,7 +9,7 @@ export default function UserPet() {
 
   useEffect(() => {
     axios
-      .get("https://pet-finder-9j4w.onrender.com/pets/user")
+      .get("https://pet-finder-pgl9.onrender.com/pets/user")
       .then((resp) => {
         setPets(resp.data.pets);
         setLoading(false);

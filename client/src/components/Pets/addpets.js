@@ -32,7 +32,7 @@ export default function AddPet() {
       return;
     }
     const response = await fetch(
-      "https://pet-finder-9j4w.onrender.com/add/pet",
+      "https://pet-finder-pgl9.onrender.com/add/pet",
       {
         method: "POST",
         headers: {

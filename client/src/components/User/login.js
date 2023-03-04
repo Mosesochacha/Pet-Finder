@@ -15,7 +15,7 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const res = await fetch("https://pet-finder-9j4w.onrender.com/user/login", {
+    const res = await fetch("https://pet-finder-pgl9.onrender.com/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export default function Login() {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    const res = await fetch("https://pet-finder-9j4w.onrender.com/user/reset-password", {
+    const res = await fetch("https://pet-finder-pgl9.onrender.com/user/reset-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export default function Login() {
   };
 
   return (
-    <center className="mt-5 ">
+    <center className="mt-5">
 
       <div className="sign_up">
         <form onSubmit={handleLogin}>

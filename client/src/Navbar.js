@@ -6,10 +6,10 @@ export default function Navbar({ setSearchText, setSearchType }) {
   const [message, setMessage] = useState("");
   const history = useHistory();
   const [error, setError] = useState("");
-  const handleLogout = async (e) => {
-    e.preventDefault();
+  const handleLogout = async () => {
+    // e.preventDefault();
     const res = await fetch(
-      "https://pet-finder-9j4w.onrender.com/user/logout",
+      "https://pet-finder-pgl9.onrender.com/user/logout",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -26,19 +26,21 @@ export default function Navbar({ setSearchText, setSearchType }) {
   };
 
   return (
-    <div className="Navbar">
+    <div className="Navba">
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
           <NavLink to="/home"> Home</NavLink>
           <NavLink to="/add">ADD YOUR PET</NavLink>
           <NavLink to="/view">VIEW YOUR PETS</NavLink>
-          <button onClick={(e)=>{
-            e.preventDefault();
-            handleLogout()
-            history.push("/")
-          }}>LOGOUT</button>
-          <NavLink to="/login">LOGIN</NavLink>
-          <NavLink to="/register">REGISTER</NavLink>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              handleLogout();
+              history.push("/");
+            }}
+          >
+            LOGOUT
+          </button>
 
           <div>{message && <p>{message}</p>}</div>
           <div>{error && <p>{error}</p>}</div>

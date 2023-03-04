@@ -2,7 +2,7 @@ import axios from "axios";
 import DisplayPets from "./dispalypets";
 import React, { useState, useEffect } from "react";
 
-const URL = "https://pet-finder-9j4w.onrender.com/pets";
+const URL = "https://pet-finder-pgl9.onrender.com/pets";
 
 export default function Pets() {
   const [pets, setPets] = useState([]);

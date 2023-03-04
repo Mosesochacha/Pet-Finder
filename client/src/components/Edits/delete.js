@@ -7,7 +7,7 @@ export default function Petdelete() {
 
   async function DeletePet(id) {
     console.log("hello");
-    const response = await fetch(`https://pet-finder-9j4w.onrender.com/pets/delete/${id}`, {
+    const response = await fetch(`https://pet-finder-pgl9.onrender.com/pets/delete/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

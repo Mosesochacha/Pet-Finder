@@ -51,27 +51,26 @@ class ApplicationController < Sinatra::Base
 
   # Add pet
   post "/add/pet" do
-    user = User.find_by(id: session[:user_id])
-    if user
-      pet = Pet.create(
-        name: params[:name],
-        breed: params[:breed],
-        age: params[:age],
-        image: params[:image],
-        species: params[:species],
-        description: params[:description],
-        user_id: user.id,
-      )
-
-      if pet.valid?
-        { message: "Pet added successfully" }.to_json
-      else
-        { error: "Failed to add pet" }.to_json
-      end
+    pet = Pet.new(
+      name: params[:name],
+      breed: params[:breed],
+      age: params[:age],
+      image: params[:image],
+      species: params[:species],
+      description: params[:description],
+      user_id: user.id,
+    )
+  
+    if pet.valid?
+      pet.save
+      status 201
+      { message: "Pet added successfully" }.to_json
     else
-      { error: "You must be logged in to add a pet" }.to_json
+      status 422
+      { error: "Failed to add pet" }.to_json
     end
   end
+  
 
   # View all pets
   get "/pets" do
