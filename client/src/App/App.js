@@ -5,11 +5,12 @@ import { useState } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import EditPet from "../components/Pets/edit";
 import Login from "../components/User/login";
-import SearchFunction from "../components/search/search";
+import SearchFunct from "../components/search/search";
 import Register from "../components/User/register";
 import UserPet from "../components/User/userpets/userpets";
 import Homepage from "../components/homepage/homepage";
 import Navbar from "../Navbar";
+import HomepageNavbar from "../components/homepage/nav";
 
 function App() {
   const [searchText, setSearchText] = useState([]);
@@ -17,13 +18,16 @@ function App() {
   const location = useLocation();
   const path = location.pathname;
 
-  const showNavbar = path !== "/login" && path !== "/register" && path !== "/";
+  let navbar;
+  if (path === "/login" || path === "/register" || path === "/") {
+    navbar = <HomepageNavbar />;
+  } else {
+    navbar = <Navbar setSearchText={setSearchText} setSearchType={setSearchType} />;
+  }
 
   return (
     <div className="Container">
-      {!showNavbar && (
-        <Navbar setSearchText={setSearchText} setSearchType={setSearchType} />
-      )}
+      {navbar}
 
       <Switch>
         <Route exact path="/login">
@@ -55,7 +59,7 @@ function App() {
         </Route>
 
         <Route path="/search">
-          <SearchFunction searchtext={searchText} searchtype={searchType} />
+          <SearchFunct searchtext={searchText} searchtype={searchType} />
         </Route>
       </Switch>
     </div>

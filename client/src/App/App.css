@@ -7,23 +7,29 @@
   background-size: 50%; */
 }
 
-.Homepages{
+body{
   background-image: url(/src/App/pexels-amine-mayoufi-3069334.jpg);
   background-color: brown;
-  background-size: 50%;
+  background-size: 30%;
   height: 80%;
   width: 100%;
+  background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
 }
 
 
-
-/* Header Styles */
-.header {
-	/* background-color: #1abc9c;
-	color: #ffffff;
-	text-align: center;
-	padding: 50px; */
+.Athauti{
+  background-color: aqua;
+  background-image: url(/src/App/pexels-amine-mayoufi-3069334.jpg);
+  background-color: brown;
+  background-size: 10%;
+  height: 80%;
+  width: 100%
 }
+
+
 
 /* Hero Image Styles */
 .hero-image {
@@ -92,3 +98,5 @@
 	background-color: #1abc9c
 
 }
+
+

@@ -6,24 +6,16 @@ export default function Homepage() {
   return (
     <div className="Homepages">
              <nav className="navbar bg-body-tertiary">
-  <div class="container-fluid " id="homepagenav">
+  <div className="container-fluid " id="homepagenav">
     <a href="l" className="navbar-brand">Navbar</a>
     <button>log</button>
   </div>
 </nav>
       
       <div className="header">
-        <h1>Pet Finder</h1>
         <h3>Licence</h3>
         <div className="d-flex me-10">
-        <button
-        className="me-2"
-          onClick={(e) => {
-            history.push("/register");
-          }}
-        >
-          REGISTER
-        </button>
+        
         <button
           onClick={(e) => {
             e.preventDefault();

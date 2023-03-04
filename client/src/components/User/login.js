@@ -57,7 +57,7 @@ export default function Login() {
   };
 
   return (
-    <center className="mt-5">
+    <center className="mt-5 ">
 
       <div className="sign_up">
         <form onSubmit={handleLogin}>

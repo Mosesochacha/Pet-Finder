@@ -2,7 +2,7 @@ import React, { useState , useEffect } from "react";
 import axios from "axios";
 import SearchData from "./searcheddata";
 
-export default function SearchFunction({searchtext , searchtype}){
+export default function SearchFunct({searchtext , searchtype}){
  
    const [p , setp] = useState([]);
      
