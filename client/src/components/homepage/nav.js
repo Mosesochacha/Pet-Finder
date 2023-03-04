@@ -1,12 +1,26 @@
-import React from "react"
+import React from "react";
+import { useHistory } from "react-router-dom";
 
-
-
-export default  function HomepageNavbar(){
-
-  return(
+export default function HomepageNavbar() {
+  const history = useHistory()
+  return (
     <div>
-      HELLO
+      <nav className="navbar bg-body-tertiary">
+        <div className="container-fluid " id="homepagenav">
+          <a href="l" className="navbar-brand">
+            WELCOME TO PET FINDER
+          </a>
+           <h3>Licence</h3>
+          <button onClick={(e)=>{
+            e.preventDefault()
+            history.push("/login")
+          }}>LOGIN</button>
+          <button onClick={(e)=>{
+            e.preventDefault()
+            history.push("/register")
+          }}>REGISTER</button>
+        </div>
+      </nav>
     </div>
-  )
+  );
 }

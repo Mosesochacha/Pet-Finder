@@ -18,8 +18,18 @@ body{
 	background-size: cover;
 	position: relative;
 }
-
-
+ #background{
+  z-index: 6000;
+ }
+  
+  
+  .par{
+    color: black;
+    font-family: 'Times New Roman', Times, serif;
+    margin-left: -45em;
+    width: 40em;
+    margin-top: 3em;
+  }
 .Athauti{
   background-color: aqua;
   background-image: url(/src/App/pexels-amine-mayoufi-3069334.jpg);
