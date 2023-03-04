@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 export default function Navbar({ setSearchText, setSearchType }) {
   const [search, setSearch] = useState("");
   const [message, setMessage] = useState("");
+  const history = useHistory();
   const [error, setError] = useState("");
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -25,18 +26,20 @@ export default function Navbar({ setSearchText, setSearchType }) {
   };
 
   return (
-
-    
     <div className="Navbar">
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
           <NavLink to="/home"> Home</NavLink>
           <NavLink to="/add">ADD YOUR PET</NavLink>
           <NavLink to="/view">VIEW YOUR PETS</NavLink>
-          <NavLink to="/landingpage" onClick={handleLogout} >  LOGOUT</NavLink>
+          <button onClick={(e)=>{
+            e.preventDefault();
+            handleLogout()
+            history.push("/")
+          }}>LOGOUT</button>
           <NavLink to="/login">LOGIN</NavLink>
           <NavLink to="/register">REGISTER</NavLink>
-          {/* <button onClick={handleLogout}>LOGOUT</button> */}
+
           <div>{message && <p>{message}</p>}</div>
           <div>{error && <p>{error}</p>}</div>
           <form className="d-flex me-3" role="search">
@@ -45,7 +48,6 @@ export default function Navbar({ setSearchText, setSearchType }) {
               onClick={(e) => {
                 setSearchType(e.target.value);
               }}
-              
             >
               <option>breed</option>
               <option>name</option>
@@ -60,16 +62,17 @@ export default function Navbar({ setSearchText, setSearchType }) {
               }}
               value={search}
             />
-            <NavLink to="/search"
+            <button
               className="button"
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
                 setSearchText(search.toLowerCase());
+                history.push("/search");
               }}
             >
               Search
-            </NavLink>
+            </button>
           </form>
         </div>
       </nav>

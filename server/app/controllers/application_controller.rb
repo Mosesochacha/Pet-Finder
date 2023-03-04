@@ -91,7 +91,6 @@ class ApplicationController < Sinatra::Base
       end
     else
       { error: "You must be logged in to view your pets" }.to_json
-      redirect "/login"
     end
   rescue => e
     { error: e.message }.to_json

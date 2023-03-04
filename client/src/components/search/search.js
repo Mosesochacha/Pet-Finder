@@ -2,23 +2,23 @@ import React, { useState , useEffect } from "react";
 import axios from "axios";
 import SearchData from "./searcheddata";
 
-export default function SearchFunction({searchtext , searchType}){
+export default function SearchFunction({searchtext , searchtype}){
  
    const [p , setp] = useState([]);
      
    useEffect(()=>{
-    const URL= searchType ==="" ? `https://pet-finder-9j4w.onrender.com/pets/search/breed/${searchtext}` : `https://pet-finder-9j4w.onrender.com/pets/search/name/${searchtext}` ;
+    const URL= searchtype ==="breed" ? `https://pet-finder-9j4w.onrender.com/pets/search/breed/${searchtext}` : `https://pet-finder-9j4w.onrender.com/pets/search/name/${searchtext}` ;
       
     axios.get((URL))
     .then((res)=>{
       setp(res.data)
     })
-   },[searchType , searchtext])
+   },[searchtype , searchtext])
    
 
 
     return(
-      <div>
+      <div className="Search">
         {p.map((p)=>{
           return(
             <div key={p.id}>
