@@ -5,14 +5,14 @@ class ApplicationController < Sinatra::Base
   # Add user
   post "/user/register" do
     begin
-      user =
-        User.create(
-          name: params[:name],
-          email: params[:email],
-          location: params[:location],
-          password: params[:password],
-          password_confirmation: params[:password_confirmation],
-        )
+      user = User.create(
+        name: params[:name],
+        email: params[:email],
+        location: params[:location],
+        password: params[:password],
+        password_confirmation: params[:password_confirmation],
+      )
+
       if user.valid?
         session[:user_id] = user.id
         { message: "User created successfully" }.to_json
@@ -35,27 +35,34 @@ class ApplicationController < Sinatra::Base
       session[:user_id] = user.id
       { message: "Logged in successfully" }.to_json
     else
-      { error: "Invalid email or password" }.to_json
+      if user && !user.authenticate(params[:password])
+        { error: "Incorrect password" }.to_json
+      else
+        { error: "User not found" }.to_json
+      end
     end
   end
 
   # Logout
   post "/user/logout" do
     session[:user_id] = nil
-    { message: "Logged out successfully!" }.to_json
+    redirect "/"
   end
 
   # Add pet
   post "/add/pet" do
     user = User.find_by(id: session[:user_id])
     if user
-      pet =
-        Pet.create(
-          name: params[:name],
-          breed: params[:breed],
-          age: params[:age],
-          user_id: user.id,
-        )
+      pet = Pet.create(
+        name: params[:name],
+        breed: params[:breed],
+        age: params[:age],
+        image: params[:image],
+        species: params[:species],
+        description: params[:description],
+        user_id: user.id,
+      )
+
       if pet.valid?
         { message: "Pet added successfully" }.to_json
       else
@@ -84,11 +91,11 @@ class ApplicationController < Sinatra::Base
       end
     else
       { error: "You must be logged in to view your pets" }.to_json
+      redirect "/login"
     end
   rescue => e
     { error: e.message }.to_json
   end
-  
 
   # Search pets by name
   get "/pets/search/name/:name" do
@@ -103,20 +110,27 @@ class ApplicationController < Sinatra::Base
   end
 
  # Update pet details
-put "/pets/update/:id" do
-  pet = Pet.find(params[:id])
-  if pet.user_pet_ids== session[:user_id]
-    pet.update(
-      name: params[:name],
-      breed: params[:breed],
-      age: params[:age],
-      description: params[:description]
-    )
-    pet.to_json
+ put "/pets/update/:id" do
+  pet = Pet.find_by(id: params[:id])
+  if pet
+    if pet.user_id == session[:user_id]
+      pet.update(
+        name: params[:name],
+        breed: params[:breed],
+        age: params[:age],
+        description: params[:description],
+        image: params[:image],
+        species: params[:species]
+      )
+      pet.to_json
+    else
+      { error: "You are not authorized to update this pet" }.to_json
+    end
   else
-    { error: "You are not authorized to update this pet" }.to_json
+    { error: "Pet not found" }.to_json
   end
 end
+
 
 # Retrieve all users
 get '/users' do
@@ -125,17 +139,20 @@ get '/users' do
 end
 
 # Delete pet
+# Delete pet
 delete "/pets/delete/:id" do
   begin
     pet = Pet.find(params[:id])
-    if pet.user_pet_ids == session[:user_id]
+    if pet.user_pet_ids.include?(session[:user_id])
       pet.destroy
       { message: "Pet deleted successfully" }.to_json
     else
       { error: "You are not authorized to delete this pet" }.to_json
     end
-  rescue StandardError => e
+  rescue StandardError => e 
     { error: e.message }.to_json
   end
 end
+
+
 end
