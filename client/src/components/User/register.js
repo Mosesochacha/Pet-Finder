@@ -9,12 +9,12 @@ export default function Register() {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [isRegistered, setIsRegistered] = useState(false)
-   const history = useHistory()
-    
-   if (isRegistered) {
-    history.push("/login")
-   }
+  const [isRegistered, setIsRegistered] = useState(false);
+  const history = useHistory();
+
+  if (isRegistered) {
+    history.push("/login");
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,14 +37,14 @@ export default function Register() {
     const data = await response.json();
     if (data.message) {
       setMessage(data.message);
-      setIsRegistered(true)
+      setIsRegistered(true);
       setError("");
-      history.push("/login")
+      history.push("/login");
     } else {
       setMessage("");
       setError(data.error);
       setIsRegistered(false);
-      history.push("/register")
+      history.push("/register");
     }
   };
 
@@ -53,28 +53,28 @@ export default function Register() {
       <div className="card mt-12 bg-warning" style={{ width: "18rem" }}>
         <div className="card-body ">
           <form onSubmit={handleSubmit}>
-            <label></label>
+            <label>USERNAME</label>
             <input
-            placeholder="ENTER FULL NAME"
+              placeholder="ENTER FULL NAME"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
 
-            <label>Email: </label>
-            <input
-             placeholder="ENTER YOUR EMAIL"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-
             <label>Location:</label>
             <input
-            placeholder="ENTER YOUR LOCATION"
+              placeholder="ENTER YOUR LOCATION"
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
+            />
+
+            <label>Email: </label>
+            <input
+              placeholder="ENTER YOUR EMAIL"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
 
             <label>Password: </label>
@@ -86,7 +86,7 @@ export default function Register() {
 
             <label>Confirm password: </label>
             <input
-            placeholder="RE ENTER PASSWORD"
+              placeholder="RE ENTER PASSWORD"
               type="password"
               value={passwordConfirmation}
               onChange={(e) => setPasswordConfirmation(e.target.value)}
@@ -94,9 +94,8 @@ export default function Register() {
 
             <button type="submit">Register</button>
             <p>
-                  Are you a member? <NavLink to="/login">Login</NavLink>
-
-                </p>
+              Are you a member? <NavLink to="/login">Login</NavLink>
+            </p>
             {message && <p>{message}</p>}
             {error && <p>{error}</p>}
           </form>
@@ -105,4 +104,3 @@ export default function Register() {
     </center>
   );
 }
-
