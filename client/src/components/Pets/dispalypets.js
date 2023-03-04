@@ -31,8 +31,9 @@ export default function DisplayPets({
 
   return (
     <div>
-      <div className="card" style={{ width: "18rem" }}>
-        <img src={image} className="card-img-top" alt="..." />
+      <div className="card" >
+        <center><img src={image} className="card-img mt-1" alt="..." style={{ width: "100%" , height: "20em"}} /></center>
+        
         <div className="card-body">
           <h3 className="card-title"> Name: {name}</h3>
           <h4 className="card-title">Species: {species}</h4>

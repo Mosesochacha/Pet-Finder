@@ -6,12 +6,13 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const history = useHistory()
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const history = useHistory();
 
-   if (isLoggedIn) {
-    history.push("/home")
-   }
+  if (isLoggedIn) {
+    sessionStorage.setItem("isLoggedIn", true);
+    history.push("/home");
+  }
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -28,7 +29,7 @@ export default function Login() {
     const data = await res.json();
     if (data.message) {
       setMessage(data.message);
-      setIsLoggedIn(true)
+      setIsLoggedIn(true);
       history.push("/home")
     } else {
       setMessage("");
@@ -38,15 +39,18 @@ export default function Login() {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    const res = await fetch("https://pet-finder-pgl9.onrender.com/user/reset-password", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-      }),
-    });
+    const res = await fetch(
+      "https://pet-finder-pgl9.onrender.com/user/reset-password",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+        }),
+      }
+    );
     const data = await res.json();
     if (data.message) {
       setMessage(data.message);
@@ -58,10 +62,9 @@ export default function Login() {
 
   return (
     <center className="mt-5 ">
-
       <div className="sign_up">
         <form onSubmit={handleLogin}>
-          <div className="card mt-12 bg-warning" style={{ width: "18rem" }}>
+          <div className="card mt-12" style={{ width: "18rem" }}>
             <div className="card-body ">
               <label htmlFor="email">Email</label>
               <br />
@@ -90,8 +93,14 @@ export default function Login() {
                 </div>
                 <br />
                 <p>
-                  Not a member? <NavLink to="/register" className="link" style={{color: 'red'}}>Register</NavLink>
-
+                  Not a member?{" "}
+                  <NavLink
+                    to="/register"
+                    className="link"
+                    style={{ color: "red" }}
+                  >
+                    Register
+                  </NavLink>
                 </p>
                 <p>
                   Forgot your password?{" "}

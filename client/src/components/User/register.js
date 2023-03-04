@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
+import Loading from "../loading/loader";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -10,6 +11,7 @@ export default function Register() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
+  const [isRegistering , setIsRegistering] = useState(false)
   const history = useHistory();
 
   if (isRegistered) {
@@ -18,6 +20,7 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsRegistering(true)
     const response = await fetch(
       "https://pet-finder-pgl9.onrender.com/user/register",
       {
@@ -44,6 +47,7 @@ export default function Register() {
       setMessage("");
       setError(data.error);
       setIsRegistered(false);
+      setIsRegistering(false);
       history.push("/register");
     }
   };
@@ -96,9 +100,14 @@ export default function Register() {
             <p>
               Are you a member? <NavLink to="/login">Login</NavLink>
             </p>
+            {isRegistering && <Loading/>}
             {message && <p>{message}</p>}
             {error && <p>{error}</p>}
           </form>
+          <p>
+            
+          </p>
+          
         </div>
       </div>
     </center>

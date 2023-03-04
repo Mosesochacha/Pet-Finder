@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export default function EditPet({id}) {
   const [name, setName] = useState("");
@@ -10,7 +11,7 @@ export default function EditPet({id}) {
   const [gender, setGender] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-   
+   const history = useHistory()
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -54,6 +55,7 @@ export default function EditPet({id}) {
     if (data.message) {
       setMessage(data.message);
       setError("");
+      history.push("/home")
     } else {
       setMessage("");
       setError(data.error);

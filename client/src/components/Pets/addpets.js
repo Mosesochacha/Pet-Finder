@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
 export default function AddPet({ userId }) {
   const [name, setName] = useState("");
@@ -12,7 +12,7 @@ export default function AddPet({ userId }) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  const { id } = useParams();
+  // const { user } = useParams();
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -33,7 +33,7 @@ export default function AddPet({ userId }) {
     }
 
     const response = await fetch(
-      `https://pet-finder-pgl9.onrender.com/user/${id}/add/pet`,
+      `https://pet-finder-pgl9.onrender.com/users/add_pet`,
       {
         method: "POST",
         headers: {
@@ -62,9 +62,9 @@ export default function AddPet({ userId }) {
   };
 
   return (
-    <center className="mt-5 addpet ">
+    <center className="mt-5 addpet">
       <div className="card mt-12 bg-warning" style={{ width: "21rem" }}>
-        <div className="card-body  " id="addpet">
+        <div className="card-body" id="addpet">
           <form onSubmit={handleSubmit} className="addpetform">
             <label>NAME:</label>
             <input
@@ -120,17 +120,27 @@ export default function AddPet({ userId }) {
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
+
               />
             </div>
-            <button className="mt-2" type="submit">
-              {" "}
-              ADD YOUR PET
-            </button>
-            {message && <p>{message}</p>}
-            {error && <p>{error}</p>}
-          </form>
-        </div>
-      </div>
-    </center>
-  );
+            <button type="submit" className="btn btn-dark">
+          ADD PET
+        </button>
+
+        {message && (
+          <div className="alert alert-success mt-3">{message}</div>
+        )}
+        {error && (
+          <div className="alert alert-danger mt-3">{error}</div>
+        )}
+      </form>
+    </div>
+  </div>
+</center>
+);
 }
+
+
+
+
+

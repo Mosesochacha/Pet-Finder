@@ -28,9 +28,17 @@ body{
   width: 100%;
   font-family: 'Courier New', Courier, monospace;
   font-size: medium;
-  margin-top: 0%;
+  top: 0;
  }
-  
+ button:hover,
+ NavLink:hover,
+ a:hover {
+	 background-color: blue;
+	 color: #333;
+	 /* additional hover styles */
+	 font-weight: bold;
+	 text-decoration: none;
+ }
   .par{
     color: black;
     font-family: 'Times New Roman', Times, serif;
@@ -47,7 +55,9 @@ body{
   width: 100%
 }
 
-
+.Container{
+	margin-top: 0%;
+}
 
 /* Hero Image Styles */
 .hero-image {
@@ -69,18 +79,37 @@ body{
 }
 
 /* Button Styles */
-.button {
-	background-color: #3498db;
-	color: #ffffff;
-	padding: 10px 20px;
+button {
+	width: 9em;
+	height: 3em;
+	border-radius: 30em;
+	font-size: 15px;
+	font-family: inherit;
 	border: none;
-	border-radius: 5px;
-	text-align: center;
-	display: inline-block;
-	font-size: 16px;
-	margin-top: 10px;
-}
-
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+	box-shadow: 6px 6px 12px #c5c5c5,
+							-6px -6px 12px #ffffff;
+ }
+ 
+ button::before{
+	content: '';
+	width: 0;
+	height: 3em;
+	border-radius: 30em;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-image: linear-gradient(to right, #0fd850 0%, #f9f047 100%);
+	transition: .5s ease;
+	display: block;
+	z-index: -1;
+ }
+ 
+ button:hover::before , NavLink:hover::before {
+	width: 9em;
+ }
 .button:hover {
 	background-color: #2980b9;
 	cursor: pointer;
@@ -117,4 +146,27 @@ body{
 
 }
 
+
+.card {
+  
+  background: lightgrey;
+  border: 3px inset white;
+  background: #e8e8e8;
+  box-shadow: inset 20px 20px 60px #c5c5c5, inset -20px -20px 60px #ffffff;
+  transition: all .5s ease-in-out;
+  border-radius: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	margin-top: 4em;
+  font-weight: bolder;
+  color: #8a8989;
+	margin-left: 4px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  transition: all .5s ease-in-out;
+}
 

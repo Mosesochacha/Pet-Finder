@@ -8,40 +8,38 @@ export default function Pets() {
   const [pets, setPets] = useState([]);
 
   useEffect(() => {
-    axios.get(URL).then((resp) => {
-      setPets(resp.data);
-    })
-    .catch((err)=>{
-      console.error(err)
-    })
+    axios
+      .get(URL)
+      .then((resp) => {
+        setPets(resp.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
 
   return (
     <div>
-      <center><h1 id="header">Adoptive, Foster happines</h1></center>
-
-    <div className="pets">
-      {pets.map((newpets)=>{
-        return(
-          <div key={newpets.id}>
-            <div>
-              <DisplayPets
-              name = {newpets.name}
-              age = {newpets.age}
-              species = {newpets.species}
-              breed = {newpets.breed}
-              image = {newpets.image}
-              gender = {newpets.gender}
-              description = {newpets.description}
-              id = {newpets.id}
-              
-              />
+      <div className="pets ">
+        {pets.map((newpets) => {
+          return (
+            <div key={newpets.id}>
+              <div>
+                <DisplayPets
+                  name={newpets.name}
+                  age={newpets.age}
+                  species={newpets.species}
+                  breed={newpets.breed}
+                  image={newpets.image}
+                  gender={newpets.gender}
+                  description={newpets.description}
+                  id={newpets.id}
+                />
+              </div>
             </div>
-          </div>
-        )
-      })}
+          );
+        })}
+      </div>
     </div>
-    </div>
-   
   );
 }

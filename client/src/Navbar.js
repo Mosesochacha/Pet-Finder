@@ -30,8 +30,8 @@ export default function Navbar({ setSearchText, setSearchType }) {
   
 
   return (
-    <div className="navbar">
-      <nav className="navbar navbar-expand-lg">
+    <div className="navbr mt-0">
+      <nav className="navbar bg-body-tertiary mt-0">
         <div className="container-fluid">
           <NavLink to="/home"> Home</NavLink>
           <NavLink to="/add">ADD YOUR PET</NavLink>
@@ -59,7 +59,7 @@ export default function Navbar({ setSearchText, setSearchType }) {
               <option>name</option>
             </select>
             <input
-              className="form-control m-2"
+              className="form-control me-2"
               type="search"
               placeholder="Search"
               aria-label="Search"

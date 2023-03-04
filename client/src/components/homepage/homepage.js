@@ -77,7 +77,7 @@ export default function Homepage() {
            <span className="par" >{paragraphs[Math.floor(Math.random() * paragraphs.length)]}</span>
           </div>
 
-          <p>
+          <p style={{color: "black"}}>
             Search for your perfect pet by breed, age, and location as well as
             add yours
           </p>
