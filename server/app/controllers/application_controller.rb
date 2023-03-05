@@ -1,6 +1,7 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, "application/json"
-  enable :sessions
+  use Rack::Session::Cookie
+
 
   # Add user
   post "/user/register" do
@@ -12,7 +13,7 @@ class ApplicationController < Sinatra::Base
         password: params[:password],
         password_confirmation: params[:password_confirmation],
       )
-
+     
       if user.valid?
         session[:user_id] = user.id
         { message: "User created successfully" }.to_json
@@ -46,15 +47,16 @@ class ApplicationController < Sinatra::Base
   post "/user/logout" do
     session[:user_id] = nil
     { message: "Logged out successfully" }.to_json
-  rescue => e
+  rescue StandardError => e
     { error: e.message }.to_json
   end
+
   
 
 
   # Add pet
   post "/users/add_pet" do
-    user = User.find_by(id: params[:user_id])
+    user = User.find_by(id: session[:user_id])
     if user
       pet = Pet.new(
         name: params[:name],
@@ -63,9 +65,9 @@ class ApplicationController < Sinatra::Base
         image: params[:image],
         species: params[:species],
         description: params[:description],
-        user_id: user.id
+        user_pet_ids: [user.id]
       )
-  
+       
       if pet.save
         status 201
         { message: "Pet added successfully" }.to_json
@@ -91,22 +93,22 @@ class ApplicationController < Sinatra::Base
   end
 
   # View all pets for current user
-  get "/pets/user" do
-    user = User.find_by(id: session[:user_id])
-    if user
-      pets = user.pets
-      if pets.empty?
-        { message: "You haven't added any pets yet" }.to_json
-      else
-        { message: "Here are your pets", pets: pets }.to_json
-      end
+get "/pets/user" do
+  user = User.find_by(id: session[:user_id])
+  if user
+    pet = user.pets.first
+    if pet
+      { message: "Here is your pet", pet: pet }.to_json
     else
-      { error: "You must be logged in to view your pets" }.to_json
+      { message: "You haven't added any pets yet" }.to_json
     end
-  rescue => e
-    { error: e.message }.to_json
+  else
+    { error: "You must be logged in to view your pet" }.to_json
   end
-  
+rescue => e
+  { error: e.message }.to_json
+end
+
 
   # Search pets by name
   get "/pets/search/name/:name" do
@@ -128,13 +130,14 @@ class ApplicationController < Sinatra::Base
       { error: e.message }.to_json
     end
   end
-  
+
  # Update pet details
  put "/pets/update/:id" do
   begin
     pet = Pet.find_by(id: params[:id])
     if pet
-      if pet.user_id == session[:user_id]
+      if pet.user_pet_ids.include?(session[:user_id])
+        pet.user_pet_ids << params[:new_user_id].to_i
         pet.update(
           name: params[:name],
           breed: params[:breed],
@@ -143,14 +146,17 @@ class ApplicationController < Sinatra::Base
           image: params[:image],
           species: params[:species]
         )
-        pet.to_json
+        { message: "Pet updated successfully" }.to_json
       else
+        status 403
         { error: "You are not authorized to update this pet" }.to_json
       end
     else
+      status 404
       { error: "Pet not found" }.to_json
     end
   rescue StandardError => e 
+    status 500
     { error: e.message }.to_json
   end
 end
@@ -166,18 +172,23 @@ end
 # Delete pet
 delete "/pets/delete/:id" do
   begin
-    pet = Pet.find(params[:id])
-    if pet.user_id == session[:user_id]
-      pet.destroy
-      { message: "Pet deleted successfully" }.to_json
+    pet = Pet.find_by(id: params[:id])
+    if pet
+      if pet.user_pet_ids.include?(session[:user_id])
+        user_pet = UserPet.where(user_id: session[:user_id], pet_id: pet.id).first
+        user_pet.destroy if user_pet
+        pet.destroy
+        { message: "Pet deleted successfully" }.to_json
+      else
+        { error: "You are not authorized to delete this pet" }.to_json
+      end
     else
-      { error: "You are not authorized to delete this pet" }.to_json
+      { error: "Pet not found" }.to_json
     end
-  rescue ActiveRecord::RecordNotFound
-    { error: "Pet not found" }.to_json
+  rescue => e
+    { error: e.message }.to_json
   end
 end
-
 
 
 end

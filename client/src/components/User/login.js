@@ -8,17 +8,12 @@ export default function Login() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoggedInin , setIsLoggedInify] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const history = useHistory();
-
-  if (isLoggedIn) {
-    sessionStorage.setItem("isLoggedIn", true);
-    history.push("/home");
-  }
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setIsLoggedInify(true);
+    setIsLoggingIn(true);
     const res = await fetch("https://pet-finder-pgl9.onrender.com/user/login", {
       method: "POST",
       headers: {
@@ -37,10 +32,9 @@ export default function Login() {
     } else {
       setMessage("");
       setError(data.error);
+      setIsLoggingIn(false); // <-- Add this line to stop the loading spinner
     }
-    setIsLoggedInify(false);
   };
-  
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
@@ -62,16 +56,19 @@ export default function Login() {
     } else {
       setMessage("");
       setError(data.error);
-      
     }
-    setIsLoggedInify(false)
+    setIsLoggingIn(false);
   };
 
+  if (isLoggedIn) {
+    history.push("/home");
+  }
+
   return (
-    <center className=" ">
-      <div className="sign_up">
+    <center className="mt-5 ">
+      <div className="sign_in">
         <form onSubmit={handleLogin}>
-          <div className="card mt-12" style={{ width: "18rem" }}>
+          <div className="card " style={{ width: "16rem" }}>
             <div className="card-body ">
               <label htmlFor="email">Email</label>
               <br />
@@ -82,7 +79,6 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
               />
               <label htmlFor="password">Password</label>
-              {isLoggedInin && <Loading/>}
               <input
                 type="password"
                 placeholder="ENTER PASSWORD"
@@ -90,7 +86,7 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <br />
-             
+              <div className="load">{isLoggingIn && <Loading />}</div>
               <center>
                 <button type="submit" className="mt-3">
                   Login
@@ -105,7 +101,8 @@ export default function Login() {
                   Not a member?{" "}
                   <NavLink
                     to="/register"
-                    className="link"
+                    className="link
+"
                     style={{ color: "red" }}
                   >
                     Register

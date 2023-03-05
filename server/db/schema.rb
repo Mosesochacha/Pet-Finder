@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_01_073111) do
+ActiveRecord::Schema.define(version: 2023_03_05_173548) do
 
   create_table "pets", force: :cascade do |t|
     t.string "name"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2023_03_01_073111) do
     t.string "gender"
     t.string "image"
     t.string "description"
+    t.integer "user_pet_ids"
   end
 
   create_table "user_pets", force: :cascade do |t|
@@ -42,6 +43,6 @@ ActiveRecord::Schema.define(version: 2023_03_01_073111) do
     t.index ["email"], name: "index_users_on_email"
   end
 
-  add_foreign_key "user_pets", "pets"
-  add_foreign_key "user_pets", "users"
+  add_foreign_key "user_pets", "pets", on_delete: :cascade
+  add_foreign_key "user_pets", "users", on_delete: :cascade
 end

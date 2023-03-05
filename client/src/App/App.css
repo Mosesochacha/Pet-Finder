@@ -61,7 +61,7 @@ body{
 
 /* Hero Image Styles */
 .hero-image {
-	background-image: url('https://images.unsplash.com/photo-1593642535819-d2c2f65e1f50?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+	
 	height: 500px;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -194,4 +194,8 @@ button {
 @keyframes Spinning{
 	from{transform: rotate(0turn)}
 	to{transform: rotate(1turn)}
+}
+
+#display{
+	background-image: url(/src/App/pexels.jpg);
 }

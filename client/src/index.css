@@ -154,7 +154,7 @@ section {
   font-family: "Times New Roman", Times, serif;
   display: grid;
   grid-template-columns: auto  auto auto;
-  gap: 0px
+  justify-content: space-between;
 }
 
 .Search{

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+
 export default function DisplayPets({
   name,
   age,
@@ -12,7 +13,12 @@ export default function DisplayPets({
 }) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+
+
+
+
   const URL = `https://pet-finder-pgl9.onrender.com/pets/delete/`;
+  
   const handleDelete = async (e) => {
     e.preventDefault();
     const res = await fetch( URL + `${id}`, {
