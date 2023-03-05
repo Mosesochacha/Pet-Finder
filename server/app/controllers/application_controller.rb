@@ -1,6 +1,7 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, "application/json"
-  use Rack::Session::Cookie
+  # use Rack::Session::Cookie, secret: ENV['SESSION_SECRET']
+   enable :session_
 
 
   # Add user
@@ -91,7 +92,7 @@ class ApplicationController < Sinatra::Base
     pets = Pet.all
     pets.to_json
   end
-
+  
   # View all pets for current user
 get "/pets/user" do
   user = User.find_by(id: session[:user_id])

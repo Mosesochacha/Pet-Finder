@@ -47,7 +47,6 @@ export default function AddPet({ userId }) {
           description,
           image,
           gender,
-          user_id: userId,
         }),
       }
     );
