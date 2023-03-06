@@ -1,7 +1,7 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, "application/json"
   enable :sessions
-  set :session_secret, ENV['SESSION_SECRET']
+  
 
   # Add user
   post "/user/register" do
