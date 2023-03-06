@@ -1,6 +1,7 @@
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import Loading from "../../loading/loader";
 
 export default function UserPet() {
   const [loading, setLoading] = useState(true);
@@ -13,7 +14,7 @@ export default function UserPet() {
       .then((resp) => {
         setPets(resp.data.pets);
         setLoading(false);
-        alert("Pets loaded successfully!");
+        // alert("Pets loaded successfully!");
       })
       .catch((err) => {
         console.error(err);
@@ -24,7 +25,7 @@ export default function UserPet() {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    <Loading/>
   }
 
   if (error) {
@@ -38,14 +39,14 @@ export default function UserPet() {
   return (
     <div>
       <center>
-        <h1 id="header">Adoptive, Foster happines</h1>
+      
       </center>
 
       <div className="pets">
         {pets.map((newpets) => {
           return (
             <div key={newpets.id}>
-              <div className="card">
+              <div className="card mt-10">
                 <img src={newpets.image} className="card-img-top" alt="..." />
                 <div className="card-body">
                   <h3 className="card-title"> Name: {newpets.name}</h3>

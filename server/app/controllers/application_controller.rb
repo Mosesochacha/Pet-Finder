@@ -1,7 +1,7 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, "application/json"
   # use Rack::Session::Cookie, secret: ENV['SESSION_SECRET']
-  enable :sessions
+   enable :session
 
 
   # Add user
@@ -52,23 +52,22 @@ class ApplicationController < Sinatra::Base
     { error: e.message }.to_json
   end
 
-  
 
+ # Add pet
+ post "/add/pet/:id" do
+  user = User.find_by(id: params[:id])
 
-  # Add pet
-  
-post '/users/:user_id/pets' do
-  user = User.find_by(id: params[:user_id])
   if user
-    pet = user.pets.new(
+    pet = Pet.new(
       name: params[:name],
       breed: params[:breed],
       age: params[:age],
       image: params[:image],
       species: params[:species],
-      description: params[:description]
+      description: params[:description],
+      user_pet_ids: user.id
     )
-
+       
     if pet.save
       status 201
       { message: "Pet added successfully" }.to_json
@@ -77,10 +76,13 @@ post '/users/:user_id/pets' do
       { error: "Failed to add pet" }.to_json
     end
   else
-    status 404
-    { error: "User not found" }.to_json
+    status 422
+    { error: "You must be logged in to add a pet" }.to_json
   end
 end
+
+
+
 
   
   
@@ -93,7 +95,7 @@ end
   end
   
   # View all pets for current user
-get "/pets/user" do
+get "/pets/user/:id" do
   user = User.find_by(id: session[:user_id])
   if user
     pet = user.pets.first
@@ -132,7 +134,7 @@ end
   end
 
  # Update pet details
- put "/pets/update/" do
+ put "/pets/update/:id" do
   begin
     pet = Pet.find_by(id: params[:id])
     if pet
@@ -166,7 +168,8 @@ end
 # Retrieve all users
 get '/users' do
   users = User.all
-  users.to_json
+  users.to_json(include: [:pets])
+
 end
 
 # Delete pet
@@ -189,6 +192,5 @@ delete "/pets/delete/:id" do
     { error: e.message }.to_json
   end
 end
-
 
 end
