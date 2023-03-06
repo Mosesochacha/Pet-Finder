@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
-export default function AddPet({ userId }) {
+export default function AddPet() {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [breed, setBreed] = useState("");
@@ -33,7 +33,7 @@ export default function AddPet({ userId }) {
     }
 
     const response = await fetch(
-      `https://pet-finder-pgl9.onrender.com/user/${userId}/add_pet`,
+      `https://pet-finder-pgl9.onrender.com/user/${user}/add_pet`,
       {
         method: "POST",
         headers: {
