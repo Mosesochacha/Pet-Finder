@@ -8,6 +8,7 @@ class CreateAnimals < ActiveRecord::Migration[6.1]
       t.string :gender
       t.string :image
       t.string :description
+      t.references :user, foreign_key: { on_delete: :cascade }
     end
   end
 end

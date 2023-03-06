@@ -10,6 +10,7 @@ export default function DisplayPets({
   gender,
   description,
   id,
+  exportId
 }) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -52,7 +53,9 @@ export default function DisplayPets({
               delete
             </i>
              
-            <NavLink to="/edit"> <i className="material-icons">edit</i></NavLink>
+            <NavLink onClick={()=>{
+              exportId(id)
+            }} to="/edit"> <i className="material-icons">edit</i></NavLink>
            
           </div>
         </div>

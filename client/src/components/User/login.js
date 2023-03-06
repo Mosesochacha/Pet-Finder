@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import Loading from "../loading/loader";
 
-export default function Login() {
+export default function Login({exportValue}) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -14,7 +14,7 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoggingIn(true);
-    const res = await fetch("https://pet-finder-pgl9.onrender.com/user/login", {
+    const res = await fetch("http://localhost:9292/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -88,7 +88,9 @@ export default function Login() {
               <br />
               <div className="load">{isLoggingIn && <Loading />}</div>
               <center>
-                <button type="submit" className="mt-3">
+                <button onClick={()=>{
+                  exportValue(email)
+                }} type="submit" className="mt-3">
                   Login
                 </button>
                 <br />

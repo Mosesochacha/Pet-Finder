@@ -20,16 +20,9 @@ ActiveRecord::Schema.define(version: 2023_03_05_173548) do
     t.string "gender"
     t.string "image"
     t.string "description"
-    t.integer "user_pet_ids"
-  end
-
-  create_table "user_pets", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "pet_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["pet_id"], name: "index_user_pets_on_pet_id"
-    t.index ["user_id"], name: "index_user_pets_on_user_id"
+    t.integer "user_pet_ids"
+    t.index ["user_id"], name: "index_pets_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -43,6 +36,5 @@ ActiveRecord::Schema.define(version: 2023_03_05_173548) do
     t.index ["email"], name: "index_users_on_email"
   end
 
-  add_foreign_key "user_pets", "pets", on_delete: :cascade
-  add_foreign_key "user_pets", "users", on_delete: :cascade
+  add_foreign_key "pets", "users", on_delete: :cascade
 end

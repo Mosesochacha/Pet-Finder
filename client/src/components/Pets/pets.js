@@ -1,17 +1,18 @@
 import axios from "axios";
 import DisplayPets from "./dispalypets";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const URL = "https://pet-finder-pgl9.onrender.com/pets";
 
-export default function Pets() {
+export default function Pets({ exportId }) {
   const [pets, setPets] = useState([]);
-
+  const handleAddIdRef = useRef(null);
   useEffect(() => {
     axios
       .get(URL)
       .then((resp) => {
         setPets(resp.data);
+        handleAddIdRef.current = resp.data.id;
       })
       .catch((err) => {
         console.error(err);
@@ -34,6 +35,8 @@ export default function Pets() {
                   gender={newpets.gender}
                   description={newpets.description}
                   id={newpets.id}
+                  exportId={exportId}
+                  // handleAddId = {handleAddId}
                 />
               </div>
             </div>

@@ -1,7 +1,7 @@
 import "./App.css";
 import Pets from "../components/Pets/pets";
 import AddPet from "../components/Pets/addpets";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import EditPet from "../components/Pets/edit";
 import Login from "../components/User/login";
@@ -18,11 +18,51 @@ function App() {
   const location = useLocation();
   const path = location.pathname;
 
+  const [userId, setUserId] = useState("");
+
+  const [userEmail, setEmail] = useState("");
+
+  // Load the Email from localStorage on mount
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("userEmail");
+    if (storedEmail) {
+      setEmail(storedEmail);
+    }
+  }, []);
+
+  // Store the Email in localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("userEmail", userEmail);
+  }, [userEmail]);
+
+  function exportValue(value) {
+    console.log(value);
+    setEmail(value);
+  }
+
+  useEffect(() => {
+    fetch(`http://localhost:9292/user/${userEmail}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setUserId(data["id"]);
+      });
+  }, [userEmail]);
+
+  console.log(userEmail);
+
   let navbar;
   if (path === "/login" || path === "/register" || path === "/") {
     navbar = <HomepageNavbar />;
   } else {
-    navbar = <Navbar setSearchText={setSearchText} setSearchType={setSearchType} />;
+    navbar = (
+      <Navbar setSearchText={setSearchText} setSearchType={setSearchType} />
+    );
+  }
+
+  const [petId, setPetId] = useState("");
+
+  function exportId(value) {
+    setPetId(value);
   }
 
   return (
@@ -31,7 +71,7 @@ function App() {
 
       <Switch>
         <Route exact path="/login">
-          <Login />
+          <Login exportValue={exportValue} />
         </Route>
 
         <Route exact path="/register">
@@ -43,19 +83,19 @@ function App() {
         </Route>
 
         <Route exact path="/home">
-          <Pets />
+          <Pets exportId={exportId} />
         </Route>
 
         <Route exact path="/add">
-          <AddPet />
+          <AddPet userId={userId} />
         </Route>
 
         <Route exact path="/edit">
-          <EditPet />
+          <EditPet petId={petId} userId={userId} />
         </Route>
 
         <Route exact path="/view">
-          <UserPet />
+          <UserPet userId={userId} />
         </Route>
 
         <Route path="/search">

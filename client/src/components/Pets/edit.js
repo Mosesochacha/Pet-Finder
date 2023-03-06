@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-export default function EditPet({id}) {
+export default function EditPet({userId,petId}) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [breed, setBreed] = useState("");
@@ -21,6 +21,7 @@ export default function EditPet({id}) {
     };
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,7 +34,7 @@ export default function EditPet({id}) {
       return;
     }
     const response = await fetch(
-      `https://pet-finder-pgl9.onrender.com/pets/update/`,
+      `http://localhost:9292/pets/update/${petId}`,
       {
         method: "PUT",
         headers: {
@@ -47,7 +48,6 @@ export default function EditPet({id}) {
           description,
           image,
           gender,
-          id,
         }),
       }
     );

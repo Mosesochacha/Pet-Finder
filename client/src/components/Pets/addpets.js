@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 
-export default function AddPet() {
+export default function AddPet({userId}) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [breed, setBreed] = useState("");
@@ -12,7 +11,8 @@ export default function AddPet() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  const { user } = useParams();
+
+  console.log(userId)
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -33,7 +33,7 @@ export default function AddPet() {
     }
 
     const response = await fetch(
-      `https://pet-finder-pgl9.onrender.com/users/${user}/add_pets`,
+      `http://localhost:9292/add/pet/${userId}`,
       {
         method: "POST",
         headers: {

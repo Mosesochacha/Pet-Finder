@@ -1,8 +1,7 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, "application/json"
-  # use Rack::Session::Cookie, secret: ENV['SESSION_SECRET']
-   enable :session
-
+  enable :sessions
+  set :session_secret, ENV['SESSION_SECRET']
 
   # Add user
   post "/user/register" do
@@ -52,11 +51,10 @@ class ApplicationController < Sinatra::Base
     { error: e.message }.to_json
   end
 
-
- # Add pet
+  
+ # route to add a new pet
  post "/add/pet/:id" do
   user = User.find_by(id: params[:id])
-
   if user
     pet = Pet.new(
       name: params[:name],
@@ -65,15 +63,15 @@ class ApplicationController < Sinatra::Base
       image: params[:image],
       species: params[:species],
       description: params[:description],
-      user_pet_ids: user.id
+      user_id: user.id
     )
-       
-    if pet.save
-      status 201
-      { message: "Pet added successfully" }.to_json
+    if pet.valid?
+      pet.save
+        status 201
+        { message: "Pet added successfully" }.to_json
     else
       status 422
-      { error: "Failed to add pet" }.to_json
+      { error: pet.errors.full_messages }.to_json
     end
   else
     status 422
@@ -82,7 +80,7 @@ class ApplicationController < Sinatra::Base
 end
 
 
-
+  
 
   
   
@@ -93,9 +91,9 @@ end
     pets = Pet.all
     pets.to_json
   end
-  
+    
   # View all pets for current user
-get "/pets/user/:id" do
+get "/pets/current/user" do
   user = User.find_by(id: session[:user_id])
   if user
     pet = user.pets.first
@@ -121,7 +119,9 @@ end
       { error: e.message }.to_json
     end
   end
-  
+  {
+   
+  }
 
   # Search pets by breed
   get "/pets/search/breed/:breed" do
@@ -137,26 +137,37 @@ end
  put "/pets/update/:id" do
   begin
     pet = Pet.find_by(id: params[:id])
-    if pet
-      if pet.user_pet_ids.include?(session[:user_id])
-        pet.user_pet_ids << params[:new_user_id].to_i
-        pet.update(
-          name: params[:name],
-          breed: params[:breed],
-          age: params[:age],
-          description: params[:description],
-          image: params[:image],
-          species: params[:species]
-        )
-        { message: "Pet updated successfully" }.to_json
-      else
-        status 403
-        { error: "You are not authorized to update this pet" }.to_json
-      end
-    else
+
+    if pet.nil?
       status 404
-      { error: "Pet not found" }.to_json
+      return { error: "Pet not found" }.to_json
     end
+
+    unless pet.user_id == session[:user_id]
+      status 403
+      return { error: "You are not authorized to update this pet" }.to_json
+    end
+
+    new_user_id = params[:new_user_id].to_i
+
+    if new_user_id.zero?
+      status 400
+      return { error: "Invalid new user ID provided" }.to_json
+    end
+
+    if !pet.update(
+      name: params[:name],
+      breed: params[:breed],
+      age: params[:age],
+      description: params[:description],
+      image: params[:image],
+      species: params[:species]
+    )
+      status 422
+      return { error: "Failed to update pet" }.to_json
+    end
+    { message: "Pet updated successfully" }.to_json
+
   rescue StandardError => e 
     status 500
     { error: e.message }.to_json
@@ -164,33 +175,32 @@ end
 end
 
 
+get '/user/:email' do
+  user = User.find_by(email: params[:email])
+  user.to_json
+end
 
 # Retrieve all users
 get '/users' do
   users = User.all
-  users.to_json(include: [:pets])
-
+  users.to_json
 end
 
 # Delete pet
 delete "/pets/delete/:id" do
   begin
-    pet = Pet.find_by(id: params[:id])
-    if pet
-      if pet.user_pet_ids.include?(session[:user_id])
-        user_pet = UserPet.where(user_id: session[:user_id], pet_id: pet.id).first
-        user_pet.destroy if user_pet
-        pet.destroy
-        { message: "Pet deleted successfully" }.to_json
-      else
-        { error: "You are not authorized to delete this pet" }.to_json
-      end
+    pet = Pet.find(params[:id])
+    if pet.user_id == session[:user_id]
+      pet.destroy
+      { message: "Pet deleted successfully" }.to_json
     else
-      { error: "Pet not found" }.to_json
+      { error: "You are not authorized to delete this pet" }.to_json
     end
-  rescue => e
+  rescue StandardError => e 
     { error: e.message }.to_json
   end
 end
+
+
 
 end
