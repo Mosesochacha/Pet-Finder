@@ -13,7 +13,6 @@ class ApplicationController < Sinatra::Base
         password: params[:password],
         password_confirmation: params[:password_confirmation],
       )
-     
       if user.valid?
         session[:user_id] = user.id
         { message: "User created successfully" }.to_json
@@ -52,7 +51,7 @@ class ApplicationController < Sinatra::Base
   end
 
   
- # route to add a new pet
+ # r add a new pet
  post "/add/pet/:id" do
   user = User.find_by(id: params[:id])
   if user
@@ -79,13 +78,6 @@ class ApplicationController < Sinatra::Base
   end
 end
 
-
-  
-
-  
-  
-  
-
   # View all pets
   get "/pets" do
     pets = Pet.all
@@ -108,8 +100,6 @@ get "/pets/current/user" do
 rescue => e
   { error: e.message }.to_json
 end
-
-
   # Search pets by name
   get "/pets/search/name/:name" do
     begin
@@ -119,9 +109,7 @@ end
       { error: e.message }.to_json
     end
   end
-  {
-   
-  }
+  
 
   # Search pets by breed
   get "/pets/search/breed/:breed" do
@@ -173,7 +161,6 @@ end
     { error: e.message }.to_json
   end
 end
-
 
 get '/user/:email' do
   user = User.find_by(email: params[:email])
