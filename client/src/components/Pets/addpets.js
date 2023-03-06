@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function AddPet({ userId }) {
   const [name, setName] = useState("");
@@ -12,28 +12,28 @@ export default function AddPet({ userId }) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  // const { user } = useParams();
+  const { user } = useParams();
 
-  // const handleImageChange = async (e) => {
-  // //   const file = e.target.files[0];
-  // //   const reader = new FileReader();
-  // //   reader.readAsDataURL(file);
-  // //   reader.onload = () => {
-  // //     setImage(reader.result);
-  // //   };
-  // // };
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setImage(reader.result);
+    };
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-  //   if (age < 0) {
-  //     setError("Age cannot be negative.");
-  //     setMessage("");
-  //     return;
-  //   }
+    if (age < 0) {
+      setError("Age cannot be negative.");
+      setMessage("");
+      return;
+    }
 
     const response = await fetch(
-      `https://pet-finder-pgl9.onrender.com/users/add_pet`,
+      `https://pet-finder-pgl9.onrender.com/user/${userId}/add_pet`,
       {
         method: "POST",
         headers: {
@@ -118,29 +118,20 @@ export default function AddPet({ userId }) {
               <input
                 type="file"
                 accept="image/*"
-                onChange={(e) => setImage(e.target.value)}
-                // onChange={handleImageChange}
-
+                onChange={handleImageChange}
               />
             </div>
             <button type="submit" className="btn btn-dark">
-          ADD PET
-        </button>
+              ADD PET
+            </button>
 
-        {message && (
-          <div className="alert alert-success mt-3">{message}</div>
-        )}
-        {error && (
-          <div className="alert alert-danger mt-3">{error}</div>
-        )}
-      </form>
-    </div>
-  </div>
-</center>
-);
+            {message && (
+              <div className="alert alert-success mt-3">{message}</div>
+            )}
+            {error && <div className="alert alert-danger mt-3">{error}</div>}
+          </form>
+        </div>
+      </div>
+    </center>
+  );
 }
-
-
-
-
-

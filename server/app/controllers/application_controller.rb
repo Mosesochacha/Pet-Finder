@@ -56,34 +56,32 @@ class ApplicationController < Sinatra::Base
 
 
   # Add pet
-  post "/users/addpet" do
-    user = User.find(params[:user_id])
-    if user
-      pet = Pet.new(
-        name: params[:name],
-        breed: params[:breed],
-        age: params[:age],
-        image: params[:image],
-        species: params[:species],
-        description: params[:description],
-        user_pet_ids: [user.id]
-      )
   
-      if pet.save
-        status 201
-        { message: "Pet added successfully" }.to_json
-      else
-        status 422
-        { error: "Failed to add pet" }.to_json
-      end
+post '/users/:user_id/pets' do
+  user = User.find_by(id: params[:user_id])
+  if user
+    pet = user.pets.new(
+      name: params[:name],
+      breed: params[:breed],
+      age: params[:age],
+      image: params[:image],
+      species: params[:species],
+      description: params[:description]
+    )
+
+    if pet.save
+      status 201
+      { message: "Pet added successfully" }.to_json
     else
-      status 404
-      { error: "User not found" }.to_json
+      status 422
+      { error: "Failed to add pet" }.to_json
     end
-  rescue => e
-    { error: e.message }.to_json
+  else
+    status 404
+    { error: "User not found" }.to_json
   end
-  
+end
+
   
   
   
