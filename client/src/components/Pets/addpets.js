@@ -14,23 +14,23 @@ export default function AddPet({ userId }) {
 
   // const { user } = useParams();
 
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setImage(reader.result);
-    };
-  };
+  // const handleImageChange = async (e) => {
+  // //   const file = e.target.files[0];
+  // //   const reader = new FileReader();
+  // //   reader.readAsDataURL(file);
+  // //   reader.onload = () => {
+  // //     setImage(reader.result);
+  // //   };
+  // // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (age < 0) {
-      setError("Age cannot be negative.");
-      setMessage("");
-      return;
-    }
+  //   if (age < 0) {
+  //     setError("Age cannot be negative.");
+  //     setMessage("");
+  //     return;
+  //   }
 
     const response = await fetch(
       `https://pet-finder-pgl9.onrender.com/users/add_pet`,
@@ -118,7 +118,8 @@ export default function AddPet({ userId }) {
               <input
                 type="file"
                 accept="image/*"
-                onChange={handleImageChange}
+                onChange={(e) => setImage(e.target.value)}
+                // onChange={handleImageChange}
 
               />
             </div>

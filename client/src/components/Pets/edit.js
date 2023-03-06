@@ -33,7 +33,7 @@ export default function EditPet({id}) {
       return;
     }
     const response = await fetch(
-      `https://pet-finder-pgl9.onrender.com/pets/update/${id}`,
+      `https://pet-finder-pgl9.onrender.com/pets/update`,
       {
         method: "PUT",
         headers: {

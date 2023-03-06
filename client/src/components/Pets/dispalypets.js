@@ -51,6 +51,7 @@ export default function DisplayPets({
             <i onClick={handleDelete} className="material-icons">
               delete
             </i>
+             
             <NavLink to="/edit"> <i className="material-icons">edit</i></NavLink>
            
           </div>
