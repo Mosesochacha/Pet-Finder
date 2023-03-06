@@ -1,7 +1,7 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, "application/json"
   # use Rack::Session::Cookie, secret: ENV['SESSION_SECRET']
-   enable :session_
+  enable :sessions
 
 
   # Add user
@@ -56,8 +56,8 @@ class ApplicationController < Sinatra::Base
 
 
   # Add pet
-  post "/users/add_pet" do
-    user = User.find_by(id: session[:user_id])
+  post "/users/addpet" do
+    user = User.find(params[:user_id])
     if user
       pet = Pet.new(
         name: params[:name],
@@ -68,7 +68,7 @@ class ApplicationController < Sinatra::Base
         description: params[:description],
         user_pet_ids: [user.id]
       )
-       
+  
       if pet.save
         status 201
         { message: "Pet added successfully" }.to_json
@@ -83,6 +83,7 @@ class ApplicationController < Sinatra::Base
   rescue => e
     { error: e.message }.to_json
   end
+  
   
   
   
@@ -133,7 +134,7 @@ end
   end
 
  # Update pet details
- put "/pets/update/:id" do
+ put "/pets/update/" do
   begin
     pet = Pet.find_by(id: params[:id])
     if pet
