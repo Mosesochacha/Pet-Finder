@@ -35,8 +35,10 @@ export default function Pets({ exportId ,  userId }) {
                   gender={newpets.gender}
                   description={newpets.description}
                   id={newpets.id}
+            
                   exportId={exportId}
                   userId= {userId}
+
                   // handleAddId = {handleAddId}
                 />
               </div>

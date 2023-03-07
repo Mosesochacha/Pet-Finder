@@ -18,10 +18,10 @@ export default function DisplayPets({
 
 
 
-  const URL = `https://pet-finder-pgl9.onrender.com/pet/delete`;
+  const URL = `https://pet-finder-pgl9.onrender.com/pet/delete/`;
   
-  const handleDelete = async (e) => {
-    e.preventDefault();
+  const handleDelete = async () => {
+    // e.preventDefault();
     const res = await fetch( URL + `${id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
