@@ -29,18 +29,23 @@ class ApplicationController < Sinatra::Base
     end
 
   # Login
-  post "/user/login" do
-    user = User.find_by(email: params[:email])
-    if user.nil?
-      { error: "User not found" }.to_json
-    elsif user.authenticate(params[:password])
-      session[:user_id] = user.id
-      { message: "Logged in successfully" }.to_json
-    else
-      { error: "Incorrect password" }.to_json
-    end
+  begin
+    
+    post "/user/login" do
+      user = User.find_by(email: params[:email])
+      if user.nil?
+        { error: "User not found" }.to_json
+      elsif user.authenticate(params[:password])
+        session[:user_id] = user.id
+        { message: "Logged in successfully" }.to_json
+      else
+        { error: "Incorrect password" }.to_json
+      end
+    rescue => e
+      { error: "login failed" }.to_json
+      end
   end
-  
+ 
 
   # Logout
   post "/user/logout" do
@@ -86,21 +91,12 @@ class ApplicationController < Sinatra::Base
   end
 
     
-# View all pets for current user
-get "/current/user/:id" do
-  pets = Pet.where(user_id: params[:id])
-  if pets.any?
-    { message: "Here are your pets", pets: pets }.to_json
-  else
-    { message: "You haven't added any pets yet" }.to_json
-  end
-rescue => e
-  { error: e.message }.to_json
+
+# Retrieve all users with there pets
+get '/users/:id' do
+  user = User.includes(:pets).find_by(id: params[:id])
+  user.to_json(include: :pets)
 end
-
-
-
-
 
   # Search pets by name
   get "/pets/search/name/:name" do
@@ -183,11 +179,6 @@ get '/user/:email' do
   user.to_json
 end
 
-# Retrieve all users
-get '/users' do
-  users = User.all
-  users.to_json
-end
 
 delete "/pets/delete/:id" do
   begin

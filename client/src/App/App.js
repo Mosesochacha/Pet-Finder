@@ -51,8 +51,6 @@ function App() {
   }, [userEmail]);
   
 
-  console.log(userEmail);
-
   let navbar;
   if (path === "/login" || path === "/register" || path === "/" || path === "/license") {
     navbar = <HomepageNavbar />;

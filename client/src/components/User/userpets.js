@@ -1,14 +1,13 @@
 import axios from "axios";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 export default function UsersPet({ userId }) {
   const [pets, setPets] = useState(null);
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
-  console.log(userId);
   useEffect(() => {
-    axios.get(`https://pet-finder-pgl9.onrender.com/users/${userId}`).then((resp) => {
+    axios.get("http://localhost:9292/users/1").then((resp) => {
       setPets(resp.data.pets);
       const data = resp.data.pets.json();
     if (data.message) {
@@ -19,17 +18,16 @@ export default function UsersPet({ userId }) {
     }
 
     });
-  }, [userId]);
-  console.log(pets);
+  }, []);
   return (
-    <div>
-      <center>
-        <div className="card">
+    <div className="pets mt-10" style={{width: "40em"}}>
+      <center className="container">
+        <div className="pets mt-19">
           {Array.isArray(pets) &&
             pets.map((pet) => (
-              <div key={pet.id}>
-                <div className="card mt-10">
-                  <img src={pet.image} className="card-img-top" alt="..." />
+              <div key={pet.id} className ="mt-9 me-28 card container">
+                <div className=" mt-10">
+                  <img src={pet.image} className="" alt="..." />
                   <div className="card-body">
                     <h3 className="card-title"> Name: {pet.name}</h3>
                     <h4 className="card-title">Species: {pet.species}</h4>
@@ -37,9 +35,9 @@ export default function UsersPet({ userId }) {
                     {message && <p>{message}</p>}
                     {error && <p>{error}</p>}
                     <div className="edits">
-                      <NavLink to="/edit">
+                      {/* <NavLink to="/edit">
                         <i className="material-icons">edit</i>
-                      </NavLink>
+                      </NavLink> */}
                     </div>
                   </div>
                 </div>
