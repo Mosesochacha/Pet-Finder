@@ -10,13 +10,13 @@ export default function UsersPet({ userId }) {
     });
   }, [userId]);
   return (
-    <div className="pets mt-10" style={{width: "40em"}}>
+    <div className="pets mt-10" style={{width: "auto"}}>
       <center className="container">
         <div className="pets mt-19">
           <center><h1>YOUR PETS</h1></center>
           {Array.isArray(pets) &&
             pets.map((pet) => (
-              <div key={pet.id} className ="mt-9 me-28 card container">
+              <div key={pet.id} className ="mt-9  card ">
                 <div className=" mt-10">
                 <center><img src={pet.image} className="card-img mt-1" alt="..." style={{ width: "80%" , height: "20em"}} /></center>
                   {/* <img src={pet.image} className="" alt="..." /> */}

@@ -91,12 +91,12 @@ class ApplicationController < Sinatra::Base
   end
 
     
-
 # Retrieve all users with there pets
 get '/users/:id' do
   user = User.includes(:pets).find_by(id: params[:id])
   user.to_json(include: :pets)
 end
+
 
   # Search pets by name
   get "/pets/search/name/:name" do
@@ -135,70 +135,40 @@ end
   end
   
 
-# Update pet details
-put "/pets/update/:id" do
-  begin
-    pet = Pet.find_by(id: params[:id])
-    user =  User.find(id: pet.user_id)
-
-    if pet.nil?
-      status 404
-      return { error: "Pet not found" }.to_json
-    end
-
-    unless pet.user_id == user.id
-      status 404
-      return { error: "not found" }.to_json
-    end
-
-    if !pet.update(
-      name: params[:name],
-      breed: params[:breed],
-      age: params[:age],
-      description: params[:description],
-      image: params[:image],
-      species: params[:species]
-    )
-      status 422
-      return { error: "Failed to update pet" }.to_json
-    end
-
-    { message: "Pet updated successfully" }.to_json
-
-  rescue StandardError => e 
-    status 403
-    { error: "You are not authorized to delete this pet" }.to_json
-  end
-end
-
-
-
 # email
 get '/user/:email' do
   user = User.find_by(email: params[:email])
   user.to_json
 end
 
-
-delete "/pets/delete/:id" do
-  begin
-    pet = Pet.find_by(id: params[:id])
-    current_user = User.find(id: pet.user_id)
-    if pet.user_id == current_user.id
-      pet.destroy
-      status 204
+# delete
+delete '/pet/delete/:id' do
+  pet = Pet.find(params[:id])
+  if pet.user_id == session[:user_id]
+    if pet.destroy
+      { message: "Pet removed successfully" }.to_json
     else
-      status 404
-      { error: "Not found" }.to_json
+      { error: "Failed to remove pet" }.to_json
     end
-  rescue ActiveRecord::RecordNotFound => e
-    status 403
-    { error: "You are not authorized to delete this pet" }.to_json
+  else
+    { error: "You are not authorized to remove this pet" }.to_json
   end
 end
 
 
-
+# Update pet details
+put "/pets/update/:id" do
+  pet = Pet.find(params[:id])
+  if pet.user_id == session[:user_id]
+    if pet.update(name: params[:name], breed: params[:breed], age: params[:age], image: params[:image], description: params[:description])
+      { message: "Pet updated successfully" }.to_json
+    else
+      { error: "Failed to update pet" }.to_json
+    end
+  else
+    { error: "You are not authorized to update this pet" }.to_json
+  end
+end
 
 
 end

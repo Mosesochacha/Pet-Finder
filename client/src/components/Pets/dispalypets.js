@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 export default function DisplayPets({
   name,
@@ -14,11 +14,11 @@ export default function DisplayPets({
 }) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const history = useHistory()
 
 
 
-
-  const URL = `https://pet-finder-pgl9.onrender.com/pets/delete/`;
+  const URL = `https://pet-finder-pgl9.onrender.com/pet/delete`;
   
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -49,7 +49,10 @@ export default function DisplayPets({
           {error && <p>{error}</p>}
 
           <div className="edits">
-            <i onClick={handleDelete} className="material-icons">
+            <i onClick={(e)=>{
+              handleDelete()
+              history.push("/home")
+            }} className="material-icons">
               delete
             </i>
              
