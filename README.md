@@ -1,10 +1,10 @@
 # Pet-Finder
 
-This is a full-stack project that uses the Sinatra web framework and ActiveRecord ORM for the backend, and React for the frontend. This README file serves as a guide to help you understand the project and how to set it up.
+- This is a full-stack project that uses the Sinatra web framework and ActiveRecord ORM for the backend, and React for the frontend. This README file serves as a guide to help you understand the project and how to set it up.
 
 # Description
 
-The project is a simple web application that allows users to create and manage their Pets. The backend is built using Sinatra and ActiveRecord, while the frontend is built using React. The application allows users to create, read, update, and delete Pets they have added.
+  -The project is a simple web application that allows users to create and manage their Pets. The backend is built using Sinatra and ActiveRecord, while the frontend is built using React. The application allows users to create, read, update, and delete Pets they have added.
 
 # Getting started
 
@@ -21,7 +21,7 @@ The project is a simple web application that allows users to create and manage t
 
 ###### Data sample
 
-for me to come up with this application there has been afew website that offers free access to and adding pets .
+- for me to come up with this application there has been afew website that offers free access to and adding pets .
 
 I used Entity Relationship Diagram in order to come up with this applicatio.
 
@@ -31,7 +31,7 @@ I used Entity Relationship Diagram in order to come up with this applicatio.
 
 -Below is how i realeted using ERM Diagram
 
-<img src="ERDDiagram1.jpg" height="200" alt="" width="400" srcset="">
+<img src="ERDdiagram.png" height="200" alt="" width="400" srcset="">
 
 ## Deployment
 
