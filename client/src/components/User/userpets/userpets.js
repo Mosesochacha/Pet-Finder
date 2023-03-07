@@ -1,46 +1,30 @@
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import Loading from "../../loading/loader";
 
-export default function UserPet({userId}) {
-  const [loading, setLoading] = useState(true);
+export default function UserPet({ userId }) {
   const [pets, setPets] = useState(null);
+  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-    console.log(userId);
+  console.log(userId);
   useEffect(() => {
     axios
       .get(`https://pet-finder-pgl9.onrender.com/current/user/${userId}`)
       .then((resp) => {
         setPets(resp.data);
-        // alert("Pets loaded successfully!");
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setError("Failed to fetch pets");
-        setLoading(false);
-        // alert("Failed to fetch pets!");
+        const data = resp.json();
+        if (data.message) {
+          setMessage(data.message);
+          setError("");
+        } else {
+          setMessage("");
+          setError(data.error);
+        }
       });
   }, [userId]);
-
-  if (loading) {
-    return <Loading/>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  if (!pets || pets.length === 0) {
-    return <p>You have no pets.</p>;
-  }
-
   return (
     <div>
-      <center>
-      
-      </center>
+      <center></center>
 
       <div className="pets">
         {pets.map((newpets) => {
@@ -52,15 +36,14 @@ export default function UserPet({userId}) {
                   <h3 className="card-title"> Name: {newpets.name}</h3>
                   <h4 className="card-title">Species: {newpets.species}</h4>
                   <p className="card-text">DESCRPTION: {newpets.description}</p>
+                  {message && <p>{message}</p>}
+                  {error && <p>{error}</p>}
                   <div className="edits">
-                    <i className="material-icons">delete</i>
                     <NavLink to="/edit">
                       <i className="material-icons">edit</i>
                     </NavLink>
                   </div>
-                  <div className="edits mt-2">
-                    <h6 className="edit">Save</h6>
-                  </div>
+
                 </div>
               </div>
             </div>

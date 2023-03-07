@@ -143,7 +143,7 @@ end
 put "/pets/update/:id" do
   begin
     pet = Pet.find_by(id: params[:id])
-    user = User.find(pet.user_id)
+    user =  User.find(id: pet.user_id)
 
     if pet.nil?
       status 404
@@ -170,8 +170,8 @@ put "/pets/update/:id" do
     { message: "Pet updated successfully" }.to_json
 
   rescue StandardError => e 
-    status 500
-    { error: e.message }.to_json
+    status 403
+    { error: "You are not authorized to delete this pet" }.to_json
   end
 end
 
@@ -192,8 +192,7 @@ end
 delete "/pets/delete/:id" do
   begin
     pet = Pet.find_by(id: params[:id])
-    current_user = User.find(pet.user_id)
-
+    current_user = User.find(id: pet.user_id)
     if pet.user_id == current_user.id
       pet.destroy
       status 204
@@ -202,11 +201,8 @@ delete "/pets/delete/:id" do
       { error: "You are not authorized to delete this pet" }.to_json
     end
   rescue ActiveRecord::RecordNotFound => e
-    status 404
-    { error: e.message }.to_json
-  rescue => e 
-    status 500
-    { error: e.message }.to_json
+    status 403
+    { error: "You are not authorized to delete this pet" }.to_json
   end
 end
 

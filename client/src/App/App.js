@@ -10,6 +10,7 @@ import Register from "../components/User/register";
 import UserPet from "../components/User/userpets/userpets";
 import Homepage from "../components/homepage/homepage";
 import Navbar from "../Navbar";
+import Licence from "../components/homepage/licence";
 import HomepageNavbar from "../components/homepage/nav";
 
 function App() {
@@ -43,13 +44,17 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         setUserId(data["id"]);
+      })
+      .catch((error) => {
+        console.error('Error fetching user data:', error);
       });
   }, [userEmail]);
+  
 
   console.log(userEmail);
 
   let navbar;
-  if (path === "/login" || path === "/register" || path === "/") {
+  if (path === "/login" || path === "/register" || path === "/" || path === "/license") {
     navbar = <HomepageNavbar />;
   } else {
     navbar = (
@@ -87,7 +92,9 @@ function App() {
         <Route exact path="/add">
           <AddPet userId={userId} />
         </Route>
-
+        <Route exact path="/license">
+          <Licence />
+        </Route>
         <Route exact path="/edit">
           <EditPet petId={petId} userId={userId} />
         </Route>

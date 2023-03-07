@@ -6,7 +6,12 @@
   /* background-image: url(/src/App/pexels-amine-mayoufi-3069334.jpg);
   background-size: 50%; */
 }
-
+ .Licence{
+   font-family: 'Courier New', Courier, monospace;
+	 font-size: medium;
+	 margin-top: 6em;
+	 width: 90%;
+ }
 body{
   background-image: url(/src/App/pexels-amine-mayoufi-3069334.jpg);
   background-size: 30%;
