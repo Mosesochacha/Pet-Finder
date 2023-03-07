@@ -151,8 +151,8 @@ put "/pets/update/:id" do
     end
 
     unless pet.user_id == user.id
-      status 403
-      return { error: "You are not authorized to update this pet" }.to_json
+      status 404
+      return { error: "not found" }.to_json
     end
 
     if !pet.update(
@@ -197,8 +197,8 @@ delete "/pets/delete/:id" do
       pet.destroy
       status 204
     else
-      status 403
-      { error: "You are not authorized to delete this pet" }.to_json
+      status 404
+      { error: "Not found" }.to_json
     end
   rescue ActiveRecord::RecordNotFound => e
     status 403
