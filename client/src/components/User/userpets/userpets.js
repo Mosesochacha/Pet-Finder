@@ -4,52 +4,52 @@ import React, { useState, useEffect } from "react";
 
 export default function UserPet({ userId }) {
   const [pets, setPets] = useState(null);
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
   console.log(userId);
   useEffect(() => {
     axios
       .get(`https://pet-finder-pgl9.onrender.com/current/user/${userId}`)
       .then((resp) => {
         setPets(resp.data);
-        const data = resp.json();
-        if (data.message) {
-          setMessage(data.message);
+        if (resp.data.message) {
+          setMessage(resp.data.message);
           setError("");
         } else {
           setMessage("");
-          setError(data.error);
+          setError("YOU HAVE NOT ADDED PET");
         }
-      });
-  }, [userId]);
+      })
+      .catch((error) => setError("Error fetching data"));
+    }, [userId]);
+
   return (
     <div>
-      <center></center>
-
-      <div className="pets">
-        {pets.map((newpets) => {
-          return (
-            <div key={newpets.id}>
-              <div className="card mt-10">
-                <img src={newpets.image} className="card-img-top" alt="..." />
-                <div className="card-body">
-                  <h3 className="card-title"> Name: {newpets.name}</h3>
-                  <h4 className="card-title">Species: {newpets.species}</h4>
-                  <p className="card-text">DESCRPTION: {newpets.description}</p>
-                  {message && <p>{message}</p>}
-                  {error && <p>{error}</p>}
-                  <div className="edits">
-                    <NavLink to="/edit">
-                      <i className="material-icons">edit</i>
-                    </NavLink>
+      <center>
+        <div className="pets">
+          {Array.isArray(pets)
+           &&
+            pets.map((pet) => (
+              <div key={pet.id}>
+                <div className="card mt-10">
+                  <img src={pet.image} className="card-img-top" alt="..." />
+                  <div className="card-body">
+                    <h3 className="card-title"> Name: {pet.name}</h3>
+                    <h4 className="card-title">Species: {pet.species}</h4>
+                    <p className="card-text">DESCRPTION: {pet.description}</p>
+                    {message && <p>{message}</p>}
+                    {error && <p>{error}</p>}
+                    <div className="edits">
+                      <NavLink to="/edit">
+                        <i className="material-icons">edit</i>
+                      </NavLink>
+                    </div>
                   </div>
-
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            ))}
+        </div>
+      </center>
     </div>
   );
 }
