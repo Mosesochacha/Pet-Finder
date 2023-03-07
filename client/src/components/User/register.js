@@ -22,7 +22,7 @@ export default function Register() {
     setError("");
     setIsRegistering(true);
     const response = await fetch(
-      "http://localhost:9292/user/register",
+      "https://pet-finder-pgl9.onrender.com/user/register",
       {
         method: "POST",
         headers: {

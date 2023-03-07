@@ -76,6 +76,9 @@ class ApplicationController < Sinatra::Base
     status 422
     { error: "You must be logged in to add a pet" }.to_json
   end
+else{
+  error: "failito add"
+}
 end
 
   # View all pets
@@ -85,21 +88,20 @@ end
   end
     
   # View all pets for current user
-get "/pets/current/user" do
-  user = User.find_by(id: session[:user_id])
-  if user
-    pet = user.pets.first
-    if pet
-      { message: "Here is your pet", pet: pet }.to_json
-    else
-      { message: "You haven't added any pets yet" }.to_json
-    end
+get "/current/user/:id" do
+  pet = Pet.find_by(user_id: params[:id])
+  if pet
+    { message: "Here is your pet", pet: pet }.to_json
   else
-    { error: "You must be logged in to view your pet" }.to_json
+    { message: "You haven't added any pets yet" }.to_json
   end
 rescue => e
   { error: e.message }.to_json
 end
+
+
+
+
   # Search pets by name
   get "/pets/search/name/:name" do
     begin
@@ -177,7 +179,7 @@ end
 delete "/pets/delete/:id" do
   begin
     pet = Pet.find(params[:id])
-    if pet.user_id == session[:user_id]
+    if pet.user_id == user.id
       pet.destroy
       { message: "Pet deleted successfully" }.to_json
     else
@@ -187,6 +189,7 @@ delete "/pets/delete/:id" do
     { error: e.message }.to_json
   end
 end
+
 
 
 

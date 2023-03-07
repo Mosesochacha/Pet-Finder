@@ -10,7 +10,7 @@ export default function DisplayPets({
   gender,
   description,
   id,
-  exportId
+  exportId,
 }) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -39,7 +39,7 @@ export default function DisplayPets({
   return (
     <div>
       <div className="card" >
-        <center><img src={image} className="card-img mt-1" alt="..." style={{ width: "100%" , height: "20em"}} /></center>
+        <center><img src={image} className="card-img mt-1" alt="..." style={{ width: "80%" , height: "20em"}} /></center>
         
         <div className="card-body">
           <h3 className="card-title"> Name: {name}</h3>

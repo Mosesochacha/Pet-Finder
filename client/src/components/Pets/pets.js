@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 const URL = "https://pet-finder-pgl9.onrender.com/pets";
 
-export default function Pets({ exportId }) {
+export default function Pets({ exportId ,  userId }) {
   const [pets, setPets] = useState([]);
   const handleAddIdRef = useRef(null);
   useEffect(() => {
@@ -36,6 +36,7 @@ export default function Pets({ exportId }) {
                   description={newpets.description}
                   id={newpets.id}
                   exportId={exportId}
+                  userId= {userId}
                   // handleAddId = {handleAddId}
                 />
               </div>

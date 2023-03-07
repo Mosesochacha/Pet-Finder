@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import Loading from "../loading/loader";
 
 export default function EditPet({userId,petId}) {
+  
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
+  const [isLoading, setIsLoadding] = useState(false);
   const [breed, setBreed] = useState("");
   const [species, setSpecies] = useState("");
   const [description, setDescription] = useState("");
@@ -24,7 +27,7 @@ export default function EditPet({userId,petId}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoadding(true)
     if (age < 0) {
       setError("Age cannot be negative.");
       return;
@@ -34,7 +37,7 @@ export default function EditPet({userId,petId}) {
       return;
     }
     const response = await fetch(
-      `http://localhost:9292/pets/update/${petId}`,
+      `https://pet-finder-pgl9.onrender.com/pets/update/${petId}`,
       {
         method: "PUT",
         headers: {
@@ -54,11 +57,13 @@ export default function EditPet({userId,petId}) {
     const data = await response.json();
     if (data.message) {
       setMessage(data.message);
+      setIsLoadding(true)
       setError("");
       history.push("/home")
     } else {
       setMessage("");
       setError(data.error);
+      setIsLoadding(false)
     }
   };
 
@@ -106,7 +111,7 @@ export default function EditPet({userId,petId}) {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-
+                 {isLoading && <Loading/>}
             <label>GENDER: </label>
             <input
               placeholder="ENTER ANIMAL GENDER"
@@ -122,7 +127,6 @@ export default function EditPet({userId,petId}) {
                 accept="image/*"
                 onChange={handleImageChange}
               />
-              {/* <i className="material-icons" onClick={handleImageChange}>upload</i> */}
             </div>
             <button className="mt-2" type="submit">
               {" "}

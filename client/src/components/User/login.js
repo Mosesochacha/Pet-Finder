@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import Loading from "../loading/loader";
 
-export default function Login({exportValue}) {
+export default function Login({ exportValue }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -14,7 +14,7 @@ export default function Login({exportValue}) {
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoggingIn(true);
-    const res = await fetch("http://localhost:9292/user/login", {
+    const res = await fetch("https://pet-finder-pgl9.onrender.com/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export default function Login({exportValue}) {
     } else {
       setMessage("");
       setError(data.error);
-      setIsLoggingIn(false); // <-- Add this line to stop the loading spinner
+      setIsLoggingIn(false);
     }
   };
 
@@ -88,9 +88,13 @@ export default function Login({exportValue}) {
               <br />
               <div className="load">{isLoggingIn && <Loading />}</div>
               <center>
-                <button onClick={()=>{
-                  exportValue(email)
-                }} type="submit" className="mt-3">
+                <button
+                  onClick={() => {
+                    exportValue(email);
+                  }}
+                  type="submit"
+                  className="mt-3"
+                >
                   Login
                 </button>
                 <br />

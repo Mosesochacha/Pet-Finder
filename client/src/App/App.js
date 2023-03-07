@@ -22,7 +22,6 @@ function App() {
 
   const [userEmail, setEmail] = useState("");
 
-  // Load the Email from localStorage on mount
   useEffect(() => {
     const storedEmail = localStorage.getItem("userEmail");
     if (storedEmail) {
@@ -30,7 +29,6 @@ function App() {
     }
   }, []);
 
-  // Store the Email in localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("userEmail", userEmail);
   }, [userEmail]);
@@ -41,7 +39,7 @@ function App() {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:9292/user/${userEmail}`)
+    fetch(`https://pet-finder-pgl9.onrender.com/user/${userEmail}`)
       .then((res) => res.json())
       .then((data) => {
         setUserId(data["id"]);
@@ -83,7 +81,7 @@ function App() {
         </Route>
 
         <Route exact path="/home">
-          <Pets exportId={exportId} />
+          <Pets exportId={exportId} userId={userId} />
         </Route>
 
         <Route exact path="/add">

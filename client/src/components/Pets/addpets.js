@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import { useHistory } from "react-router-dom";
+import Loading from "../loading/loader";
 export default function AddPet({userId}) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -8,11 +9,12 @@ export default function AddPet({userId}) {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [gender, setGender] = useState("");
+  const [isLoading , setIsLoadding]= useState(false)
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+const history = useHistory()
 
 
-  console.log(userId)
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -25,7 +27,7 @@ export default function AddPet({userId}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+      setIsLoadding(true)
     if (age < 0) {
       setError("Age cannot be negative.");
       setMessage("");
@@ -33,7 +35,7 @@ export default function AddPet({userId}) {
     }
 
     const response = await fetch(
-      `http://localhost:9292/add/pet/${userId}`,
+      `https://pet-finder-pgl9.onrender.com/add/pet/${userId}`,
       {
         method: "POST",
         headers: {
@@ -53,10 +55,13 @@ export default function AddPet({userId}) {
     const data = await response.json();
     if (data.message) {
       setMessage(data.message);
+      setIsLoadding(true)
+      history.push("/home")
       setError("");
     } else {
       setMessage("");
       setError(data.error);
+      setIsLoadding(false)
     }
   };
 
@@ -72,7 +77,7 @@ export default function AddPet({userId}) {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-
+                {isLoading && <Loading/>}
             <label>AGE: </label>
             <input
               placeholder="ENTER ANIMAL AGE"
@@ -113,7 +118,7 @@ export default function AddPet({userId}) {
               onChange={(e) => setGender(e.target.value)}
             />
 
-            <div className="a">
+            <div className="card-image" style={{width: "2em"}}>
               <label>UPLOAD IMAGE: </label>
               <input
                 type="file"

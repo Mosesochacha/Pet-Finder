@@ -3,29 +3,29 @@ import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Loading from "../../loading/loader";
 
-export default function UserPet() {
+export default function UserPet({userId}) {
   const [loading, setLoading] = useState(true);
   const [pets, setPets] = useState(null);
   const [error, setError] = useState("");
-
+    console.log(userId);
   useEffect(() => {
     axios
-      .get("https://pet-finder-pgl9.onrender.com/pets/user")
+      .get(`https://pet-finder-pgl9.onrender.com/current/user/${userId}`)
       .then((resp) => {
-        setPets(resp.data.pets);
-        setLoading(false);
+        setPets(resp.data);
         // alert("Pets loaded successfully!");
+        setLoading(false);
       })
       .catch((err) => {
         console.error(err);
         setError("Failed to fetch pets");
         setLoading(false);
-        alert("Failed to fetch pets!");
+        // alert("Failed to fetch pets!");
       });
-  }, []);
+  }, [userId]);
 
   if (loading) {
-    <Loading/>
+    return <Loading/>;
   }
 
   if (error) {
