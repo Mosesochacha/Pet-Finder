@@ -31,7 +31,7 @@ I used Entity Relationship Diagram in order to come up with this applicatio.
 
 -Below is how i realeted using ERM Diagram
 
-<img src="/ERDDiagram1.jpg" height="200" alt="" width="400" srcset="">
+<img src="ERDDiagram1.jpg" height="200" alt="" width="400" srcset="">
 
 ## Deployment
 
