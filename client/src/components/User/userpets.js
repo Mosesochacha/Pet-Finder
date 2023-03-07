@@ -2,33 +2,30 @@ import axios from "axios";
 import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
-export default function UserPet({ userId }) {
+export default function UsersPet({ userId }) {
   const [pets, setPets] = useState(null);
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
   console.log(userId);
   useEffect(() => {
-    axios
-      .get(`https://pet-finder-pgl9.onrender.com/current/user/${userId}`)
-      .then((resp) => {
-        setPets(resp.data);
-        if (resp.data.message) {
-          setMessage(resp.data.message);
-          setError("");
-        } else {
-          setMessage("");
-          setError("YOU HAVE NOT ADDED PET");
-        }
-      })
-      .catch((error) => setError("Error fetching data"));
-    }, [userId]);
+    axios.get(`https://pet-finder-pgl9.onrender.com/users/${userId}`).then((resp) => {
+      setPets(resp.data.pets);
+      const data = resp.data.pets.json();
+    if (data.message) {
+      setMessage(data.message);
+    } else {
+      setMessage("");
+      setError(data.error);
+    }
 
+    });
+  }, [userId]);
+  console.log(pets);
   return (
     <div>
       <center>
-        <div className="pets">
-          {Array.isArray(pets)
-           &&
+        <div className="card">
+          {Array.isArray(pets) &&
             pets.map((pet) => (
               <div key={pet.id}>
                 <div className="card mt-10">

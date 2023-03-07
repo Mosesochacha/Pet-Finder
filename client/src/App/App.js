@@ -7,7 +7,7 @@ import EditPet from "../components/Pets/edit";
 import Login from "../components/User/login";
 import SearchFunct from "../components/search/search";
 import Register from "../components/User/register";
-import UserPet from "../components/User/userpets/userpets";
+import UserPet from "../components/User/userpets";
 import Homepage from "../components/homepage/homepage";
 import Navbar from "../Navbar";
 import Licence from "../components/homepage/licence";
