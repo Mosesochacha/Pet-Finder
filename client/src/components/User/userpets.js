@@ -7,7 +7,7 @@ export default function UsersPet({ userId }) {
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
   useEffect(() => {
-    axios.get("http://localhost:9292/users/1").then((resp) => {
+    axios.get(`https://pet-finder-pgl9.onrender.com/users/${userId}`).then((resp) => {
       setPets(resp.data.pets);
       const data = resp.data.pets.json();
     if (data.message) {
@@ -18,7 +18,7 @@ export default function UsersPet({ userId }) {
     }
 
     });
-  }, []);
+  }, [userId]);
   return (
     <div className="pets mt-10" style={{width: "40em"}}>
       <center className="container">
